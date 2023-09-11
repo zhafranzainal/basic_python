@@ -40,18 +40,18 @@ def update():
     global score
 
     if keyboard.left:
-        pig.x = pig.x - PIG_SPEED
+        pig.x -= PIG_SPEED
     elif keyboard.right:
-        pig.x = pig.x + PIG_SPEED
+        pig.x += PIG_SPEED
     elif keyboard.up:
-        pig.y = pig.y - PIG_SPEED
+        pig.y -= PIG_SPEED
     elif keyboard.down:
-        pig.y = pig.y + PIG_SPEED
+        pig.y += PIG_SPEED
 
     money_collected = pig.colliderect(money)
 
     if money_collected:
-        score = score + 10
+        score += 10
         place_money()
 
 
