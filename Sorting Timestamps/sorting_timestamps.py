@@ -12,6 +12,15 @@ from typing import List, Tuple
 
 
 def extract_distinct_dates(timestamps: List[str]) -> List[datetime]:
+    """
+    Extract distinct dates from a list of timestamps and return them as datetime objects.
+
+    Args:
+        timestamps (List[str]): List of timestamps in the format '%Y-%m-%d %H:%M:%S'.
+
+    Returns:
+        List[datetime]: List of distinct dates as datetime objects, sorted in ascending order.
+    """
     distinct_dates = set()
 
     for timestamp in timestamps:
@@ -29,6 +38,16 @@ def extract_distinct_dates(timestamps: List[str]) -> List[datetime]:
 
 
 def find_consecutive_sequences(dates: List[datetime]) -> List[Tuple[datetime, datetime, int]]:
+    """
+    Find consecutive sequences of dates with login activity.
+
+    Args:
+        dates (List[datetime]): List of distinct dates as datetime objects.
+
+    Returns:
+        List[Tuple[datetime, datetime, int]]: List of consecutive sequences, each containing
+        a start date, end date, and length of the sequence.
+    """
     sequences = []
     current_start = dates[0]
     current_end = dates[0]
@@ -53,6 +72,12 @@ def find_consecutive_sequences(dates: List[datetime]) -> List[Tuple[datetime, da
 
 
 def print_sequences_table(sequences: List[Tuple[datetime, datetime, int]]) -> None:
+    """
+    Print consecutive sequences as a table.
+
+    Args:
+        sequences (List[Tuple[datetime, datetime, int]]): List of consecutive sequences.
+    """
     print("\n| START      | END        | LENGTH |")
     print("|------------|------------|--------|")
 
@@ -62,6 +87,7 @@ def print_sequences_table(sequences: List[Tuple[datetime, datetime, int]]) -> No
 
 
 def main():
+    # Import generated timestamps from seed.py
     from seed import res
 
     dates = extract_distinct_dates(res)
