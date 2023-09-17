@@ -43,6 +43,42 @@ for timestamp in timestamps:
 # Convert the set back to a sorted list if needed
 distinct_dates_list = sorted(list(distinct_dates))
 
-# Print the distinct dates
-for date in distinct_dates_list:
-    print(date)
+# Convert distinct_dates_list to datetime objects
+dates = [datetime.strptime(date, "%Y-%m-%d") for date in distinct_dates_list]
+
+# Sort the dates in ascending order
+dates.sort()
+
+# Initialize variables to track the current consecutive sequence
+current_start = dates[0]
+current_end = dates[0]
+max_start = dates[0]
+max_end = dates[0]
+max_length = 1
+current_length = 1
+
+# Iterate through the dates to find the longest consecutive sequence
+for i in range(1, len(dates)):
+    if dates[i] - dates[i - 1] == timedelta(days=1):
+        current_end = dates[i]
+        current_length += 1
+    else:
+        if current_length > max_length:
+            max_length = current_length
+            max_start = current_start
+            max_end = current_end
+        current_start = dates[i]
+        current_end = dates[i]
+        current_length = 1
+
+# Check if the last sequence is the longest
+if current_length > max_length:
+    max_length = current_length
+    max_start = current_start
+    max_end = current_end
+
+# Print the table
+print()
+print("| START      | END        | LENGTH |")
+print("|------------|------------|--------|")
+print(f"| {max_start.strftime('%Y-%m-%d')} | {max_end.strftime('%Y-%m-%d')} | {max_length:^6} |")
