@@ -79,4 +79,4 @@ print("|------------|------------|--------|")
 
 for sequence in sequences:
     start, end, length = sequence
-    print(f"| {start.strftime('%Y-%m-%d')} | {end.strftime('%Y-%m-%d')} | {length:^6} |")
+    print(f"| {start.strftime('%Y-%m-%d')} | {end.strftime('%Y-%m-%d')} | {length:>6} |")
