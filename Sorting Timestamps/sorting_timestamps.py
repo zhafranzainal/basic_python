@@ -69,8 +69,8 @@ for i in range(1, len(dates)):
 # Append the last sequence
 sequences.append((current_start, current_end, current_length))
 
-# Sort sequences by length in descending order
-sequences.sort(key=lambda x: x[2], reverse=True)
+# Sort the sequences first by length in descending order, and then by start date in descending order
+sequences.sort(key=lambda x: (-x[2], -x[0].timestamp()))
 
 # Print the table
 print()
