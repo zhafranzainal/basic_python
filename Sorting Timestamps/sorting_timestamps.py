@@ -21,6 +21,7 @@ def extract_distinct_dates(timestamps: List[str]) -> List[datetime]:
     Returns:
         List[datetime]: List of distinct dates as datetime objects, sorted in ascending order.
     """
+
     distinct_dates = set()
 
     for timestamp in timestamps:
@@ -44,6 +45,7 @@ def find_consecutive_sequences(dates: List[datetime]) -> List[Tuple[datetime, da
         List[Tuple[datetime, datetime, int]]: List of consecutive sequences, each containing
         a start date, end date, and length of the sequence.
     """
+
     sequences = []
 
     # If there are no dates, return an empty list
@@ -79,6 +81,7 @@ def print_sequences_table(sequences: List[Tuple[datetime, datetime, int]]) -> No
     Args:
         sequences (List[Tuple[datetime, datetime, int]]): List of consecutive sequences.
     """
+
     print("\n| START      | END        | LENGTH |")
     print("|------------|------------|--------|")
 
