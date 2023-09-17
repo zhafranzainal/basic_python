@@ -22,16 +22,23 @@ def extract_distinct_dates(timestamps: List[str]) -> List[datetime]:
         List[datetime]: List of distinct dates as datetime objects, sorted in ascending order.
     """
 
-    distinct_dates = set()
+    distinct_dates = []
+
+    # Sort timestamps in ascending order
+    timestamps.sort()
 
     for timestamp in timestamps:
         try:
             date_obj = datetime.strptime(timestamp[:10], '%Y-%m-%d')
-            distinct_dates.add(date_obj)
+
+            # Check for duplicates before appending
+            if not distinct_dates or date_obj != distinct_dates[-1]:
+                distinct_dates.append(date_obj)
+
         except ValueError:
             continue  # Skip dirty data
 
-    return sorted(distinct_dates)
+    return distinct_dates
 
 
 def find_consecutive_sequences(dates: List[datetime]) -> List[Tuple[datetime, datetime, int]]:
