@@ -14,7 +14,8 @@ extracted_text = extracted_text \
     .replace("\n", " ") \
     .replace("03-OCT-23 11:09 AM", "") \
     .replace("Pre-Requisite : NO ", "") \
-    .replace("Remarks : NO ", "")
+    .replace("Remarks : NO ", "") \
+    .replace("Level : DEGREE ", "")
 
 pattern = r"Course Code : ([A-Z]{3}\d{4})[\s\S]+?Course Name : (.+?)\d"
 matches = re.findall(pattern, extracted_text)
