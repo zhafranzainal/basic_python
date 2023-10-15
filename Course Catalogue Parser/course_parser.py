@@ -292,6 +292,16 @@ tables[16].df.iloc[7, 4] = modes[6] + modes[7]
 # TABLE 17 SEM II
 # Split "Sec Day Time Loc Mode Cap" into its respective column
 tables[16].df.iloc[9, :6] = tables[16].df.iloc[9, 0].split()[:6]
+tables[16].df = tables[16].df.drop(11).reset_index(drop=True)
+
+column1 = tables[16].df.iloc[10, 0].split()
+tables[16].df.iloc[10, 0:2] = column1[0:2]
+
+tables[16].df.iloc[10, 6] = tables[16].df.iloc[10, 6][2:]
+tables[16].df.iloc[11, 6] = "Y " + tables[16].df.iloc[11, 6]
+
+column4 = tables[16].df.iloc[11, 4].split()
+tables[16].df.iloc[10:13, 4] = [column4[0], column4[1] + column4[2] + column4[3], column4[4] + column4[5] + column4[6]]
 
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
