@@ -15,7 +15,8 @@ extracted_text = extracted_text \
     .replace("03-OCT-23 11:09 AM", "") \
     .replace("Pre-Requisite : NO ", "") \
     .replace("Remarks : NO ", "") \
-    .replace("Level : DEGREE ", "")
+    .replace("Level : DEGREE ", "") \
+    .replace("COURSE TIMETABLE ", "")
 
 extracted_text = re.sub(r'Couse Synopsis : .*?Campus', 'Campus', extracted_text, flags=re.DOTALL)
 
