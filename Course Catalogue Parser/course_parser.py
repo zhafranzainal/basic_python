@@ -16,7 +16,9 @@ extracted_text = extracted_text \
 
 pattern = r"Course Code : ([A-Z]{3}\d{4})[\s\S]+?Course Name : (.+?)\d"
 matches = re.findall(pattern, extracted_text)
+counter = 1
 
 for match in matches:
-    print(f"Course Code: {match[0]}")
+    print(f"{counter}. Course Code: {match[0]}")
     print(f"Course Name: {match[1]}\n")
+    counter += 1
