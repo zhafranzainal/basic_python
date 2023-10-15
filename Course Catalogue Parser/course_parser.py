@@ -10,7 +10,7 @@ with pdfplumber.open("COURSE_CATALOG_IJA.pdf") as pdf:
 
 extracted_text.replace("\n", " ").replace("03-OCT-23 11:09 AM", "")
 
-pattern = r"Course Code : (\w+)\s+((?:(?!Course Code :).)*)Course Name : (.+?)\n"
+pattern = r"Course Code : ([A-Z]{3}\d{4})+((?:(?!Course Code :).)*)Course Name : (.+?)\n"
 matches = re.findall(pattern, extracted_text, re.DOTALL)
 
 for match in matches:
