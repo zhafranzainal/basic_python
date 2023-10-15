@@ -22,7 +22,7 @@ extracted_text = extracted_text \
 
 extracted_text = re.sub(r'Couse Synopsis : .*?Campus', 'Campus', extracted_text, flags=re.DOTALL)
 
-pattern = r"Course Code : ([A-Z]{3}\d{4})[\s\S]+?Course Name : (.+?)\d"
+pattern = r"Semester (I|II) Course Code : ([A-Z]{3}\d{4})[\s\S]+?Course Name : (.+?)\d"
 matches = re.findall(pattern, extracted_text)
 
 tables = camelot.read_pdf('https://or.ump.edu.my/or/CourseCatalog/COURSE_CATALOG_IJA.pdf', pages='345-384')
@@ -90,8 +90,10 @@ for i in range(6, 18):
 
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
-    print(f"{i + 1}. Course Code: {match[0]}")
-    print(f"Course Name: {match[1]}\n")
+    print(f"{i + 1}. Course Code: {match[1]}")
+    print(f"Course Name: {match[2]}")
+    print(f"Semester Offered: {match[0]}")
+    print()
 
     if i < len(tables):
         table = tables[i]
