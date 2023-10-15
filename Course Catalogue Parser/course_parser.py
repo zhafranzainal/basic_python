@@ -121,6 +121,26 @@ for i in range(2, 14):
 # Split "Sec Day Time Loc Mode Cap" into its respective column
 tables[6].df.iloc[15, :8] = tables[6].df.iloc[15, 0].split()[:8]
 
+row1 = tables[6].df.iloc[16, 0].split()
+tables[6].df.iloc[16, 0] = row1[4]
+tables[6].df.iloc[16, 1] = row1[5]
+tables[6].df.iloc[16, 2] = row1[6] + ' ' + row1[16]
+tables[6].df.iloc[16, 3] = row1[7] + ' ' + row1[17]
+tables[6].df.iloc[16, 4] = row1[0] + row1[1]
+tables[6].df.iloc[16, 5] = row1[8] + ' ' + row1[18]
+tables[6].df.iloc[16, 6] = row1[9] + ' ' + row1[10] + ' ' + row1[11] + ' ' + row1[12]
+tables[6].df.iloc[16, 7] = row1[13] + ' ' + row1[14] + ' ' + row1[15]
+
+row2 = tables[6].df.iloc[17, 0].split()
+tables[6].df.iloc[17, 0] = row2[0]
+tables[6].df.iloc[17, 1] = row2[1]
+tables[6].df.iloc[17, 2] = row2[2] + ' ' + row2[12]
+tables[6].df.iloc[17, 3] = row2[3] + ' ' + row2[13]
+tables[6].df.iloc[17, 4] = row1[2] + row1[3]
+tables[6].df.iloc[17, 5] = row2[4] + ' ' + row2[14]
+tables[6].df.iloc[17, 6] = row2[5] + ' ' + row2[6] + ' ' + row2[7] + ' ' + row2[8]
+tables[6].df.iloc[17, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
+
 # TABLE 8 SEM I
 # Split column "mode" into its respective row
 modes = tables[7].df.iloc[3, 4].split()[:6]
