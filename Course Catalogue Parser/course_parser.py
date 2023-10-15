@@ -79,6 +79,26 @@ for i in range(2, 6):
 # Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
 tables[5].df.iloc[1, :8] = tables[5].df.iloc[1, 0].split()[:8]
 
+row1 = tables[5].df.iloc[2, 0].split()
+tables[5].df.iloc[2, 0] = row1[4]
+tables[5].df.iloc[2, 1] = row1[5]
+tables[5].df.iloc[2, 2] = row1[6] + ' ' + row1[13]
+tables[5].df.iloc[2, 3] = row1[7] + ' ' + row1[14]
+tables[5].df.iloc[2, 4] = row1[0] + row1[1]
+tables[5].df.iloc[2, 5] = row1[8] + ' ' + row1[15]
+tables[5].df.iloc[2, 6] = row1[9]
+tables[5].df.iloc[2, 7] = row1[10] + ' ' + row1[11] + ' ' + row1[12]
+
+row2 = tables[5].df.iloc[3, 0].split()
+tables[5].df.iloc[3, 0] = row2[0]
+tables[5].df.iloc[3, 1] = row2[1]
+tables[5].df.iloc[3, 2] = row2[2] + ' ' + row2[9]
+tables[5].df.iloc[3, 3] = row2[3] + ' ' + row2[10]
+tables[5].df.iloc[3, 4] = row1[2] + row1[3]
+tables[5].df.iloc[3, 5] = row2[4] + ' ' + row2[11]
+tables[5].df.iloc[3, 6] = row2[5]
+tables[5].df.iloc[3, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
+
 # TABLE 6 SEM II
 # Split "Sec Day Time Loc Mode Cap" into its respective column
 tables[5].df.iloc[5, :6] = tables[5].df.iloc[5, 0].split()[:6]
