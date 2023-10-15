@@ -1,5 +1,13 @@
 import pdfplumber
 import re
+import camelot
+from IPython.display import display
+
+tables = camelot.read_pdf('https://or.ump.edu.my/or/CourseCatalog/COURSE_CATALOG_IJA.pdf', pages='345-384')
+
+for i in range(len(tables)):
+    tables[i].df = tables[i].df.replace('\\n', ' ', regex=True)
+    display(tables[i].df)
 
 with pdfplumber.open("COURSE_CATALOG_IJA.pdf") as pdf:
     extracted_text = ''
