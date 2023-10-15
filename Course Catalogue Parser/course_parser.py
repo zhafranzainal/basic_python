@@ -17,7 +17,8 @@ extracted_text = extracted_text \
     .replace("Remarks : NO ", "") \
     .replace("Level : DEGREE ", "") \
     .replace("COURSE TIMETABLE ", "") \
-    .replace("Academic Session 2023/2024 ", "")
+    .replace("Academic Session 2023/2024 ", "") \
+    .replace("Sec Day Time Loc Mode Cap Exam Staff ", "")
 
 extracted_text = re.sub(r'Couse Synopsis : .*?Campus', 'Campus', extracted_text, flags=re.DOTALL)
 
