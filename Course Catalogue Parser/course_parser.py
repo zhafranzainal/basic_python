@@ -17,6 +17,8 @@ extracted_text = extracted_text \
     .replace("Remarks : NO ", "") \
     .replace("Level : DEGREE ", "")
 
+extracted_text = re.sub(r'Couse Synopsis : .*?Campus', 'Campus', extracted_text, flags=re.DOTALL)
+
 pattern = r"Course Code : ([A-Z]{3}\d{4})[\s\S]+?Course Name : (.+?)\d"
 matches = re.findall(pattern, extracted_text)
 
