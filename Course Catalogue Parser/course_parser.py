@@ -27,5 +27,5 @@ for i, match in enumerate(matches):
 
     if i < len(tables):
         table = tables[i]
-        table.df = table.df.applymap(lambda x: x.replace('\n', ' '))
+        table.df = table.df.map(lambda x: x.replace('\n', ' '))
         display(table.df)
