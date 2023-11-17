@@ -379,6 +379,39 @@ modes = tables[19].df.iloc[11, 4].split()[:6]
 for i in range(10, 13):
     tables[19].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
 
+# TABLE 21 SEM I
+# Split "Sec Day Time Loc Mode Cap" into its respective column
+tables[20].df.iloc[1, :6] = tables[20].df.iloc[1, 0].split()[:6]
+
+# Split column "mode" into its respective row
+modes = tables[20].df.iloc[5, 4].split()[:16]
+for i in range(2, 10):
+    tables[20].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+
+# TABLE 21 SEM II
+# Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
+tables[20].df.iloc[11, :8] = tables[20].df.iloc[11, 0].split()[:8]
+
+row1 = tables[20].df.iloc[12, 0].split()
+tables[20].df.iloc[12, 0] = row1[4]
+tables[20].df.iloc[12, 1] = row1[5]
+tables[20].df.iloc[12, 2] = row1[6] + ' ' + row1[13]
+tables[20].df.iloc[12, 3] = row1[7] + ' ' + row1[14]
+tables[20].df.iloc[12, 4] = row1[0] + row1[1]
+tables[20].df.iloc[12, 5] = row1[8] + ' ' + row1[15]
+tables[20].df.iloc[12, 6] = row1[9]
+tables[20].df.iloc[12, 7] = row1[10] + ' ' + row1[11] + ' ' + row1[12]
+
+row2 = tables[20].df.iloc[13, 0].split()
+tables[20].df.iloc[13, 0] = row2[0]
+tables[20].df.iloc[13, 1] = row2[1]
+tables[20].df.iloc[13, 2] = row2[2] + ' ' + row2[9]
+tables[20].df.iloc[13, 3] = row2[3] + ' ' + row2[10]
+tables[20].df.iloc[13, 4] = row1[2] + row1[3]
+tables[20].df.iloc[13, 5] = row2[4] + ' ' + row2[11]
+tables[20].df.iloc[13, 6] = row2[5]
+tables[20].df.iloc[13, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
