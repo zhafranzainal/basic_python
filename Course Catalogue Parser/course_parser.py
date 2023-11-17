@@ -493,6 +493,14 @@ clean_table(39, 1, 3)
 # TABLE 40 SEM II
 clean_table(39, 7, 9)
 
+# TABLE 41 SEM I
+# Split "Sec Day Time Loc Mode Cap" into its respective column
+tables[40].df.iloc[1, :6] = tables[40].df.iloc[1, 0].split()
+
+# TABLE 41 SEM II
+# Split "Sec Day Time Loc Mode Cap" into its respective column
+tables[40].df.iloc[4, :6] = tables[40].df.iloc[4, 0].split()
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
