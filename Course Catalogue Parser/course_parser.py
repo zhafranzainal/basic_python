@@ -303,6 +303,46 @@ tables[16].df.iloc[11, 6] = "Y " + tables[16].df.iloc[11, 6]
 column4 = tables[16].df.iloc[11, 4].split()
 tables[16].df.iloc[10:13, 4] = [column4[0], column4[1] + column4[2] + column4[3], column4[4] + column4[5] + column4[6]]
 
+# TABLE 18 SEM I
+# Split "Sec Day Time Loc Mode Cap" into its respective column
+tables[17].df.iloc[1, :6] = tables[17].df.iloc[1, 0].split()[:6]
+
+# Split column "mode" into its respective row
+modes = tables[17].df.iloc[5, 4].split()[:12]
+tables[17].df.iloc[2, 4] = modes[0] + modes[1]
+tables[17].df.iloc[3, 4] = modes[2] + modes[3]
+tables[17].df.iloc[4, 4] = modes[4]
+tables[17].df.iloc[5, 4] = modes[5]
+tables[17].df.iloc[6, 4] = modes[6] + modes[7]
+tables[17].df.iloc[7, 4] = modes[8]
+tables[17].df.iloc[8, 4] = modes[9]
+tables[17].df.iloc[9, 4] = modes[10] + modes[11]
+
+# TABLE 18 SEM II
+# Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
+tables[17].df.iloc[11, :8] = tables[17].df.iloc[11, 0].split()[:8]
+
+row1 = tables[17].df.iloc[12, 0].split()
+row2 = tables[17].df.iloc[13, 0].split()
+
+tables[17].df.iloc[12, 0] = row1[2]
+tables[17].df.iloc[12, 1] = row1[3]
+tables[17].df.iloc[12, 2] = row1[4]
+tables[17].df.iloc[12, 3] = row1[5]
+tables[17].df.iloc[12, 4] = row2[0]
+tables[17].df.iloc[12, 5] = row1[6]
+tables[17].df.iloc[12, 6] = row1[0] + ' ' + row1[7] + ' ' + row1[8] + ' ' + row1[9]
+tables[17].df.iloc[12, 7] = row1[10] + ' ' + row1[11] + ' ' + row1[12]
+
+tables[17].df.iloc[13, 0] = row2[4]
+tables[17].df.iloc[13, 1] = row2[5]
+tables[17].df.iloc[13, 2] = row2[6] + ' ' + row2[15] + ' ' + row2[18]
+tables[17].df.iloc[13, 3] = row2[7] + ' ' + row2[16] + ' ' + row2[19]
+tables[17].df.iloc[13, 4] = row2[1] + ' ' + row2[2] + ' ' + row2[3]
+tables[17].df.iloc[13, 5] = row2[8] + ' ' + row2[17] + ' ' + row2[20]
+tables[17].df.iloc[13, 6] = row1[1] + ' ' + row2[9] + ' ' + row2[10] + ' ' + row2[11]
+tables[17].df.iloc[13, 7] = row2[12] + ' ' + row2[13] + ' ' + row2[14]
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
