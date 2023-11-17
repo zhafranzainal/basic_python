@@ -581,6 +581,12 @@ clean_table(44, 1, 3)
 # TABLE 45 SEM II
 clean_table(44, 6, 8)
 
+# TABLE 46 SEM I
+clean_table(45, 1, 3)
+
+# TABLE 46 SEM II
+fix_mode(45, 8, 9)
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
