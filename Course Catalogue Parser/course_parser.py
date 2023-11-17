@@ -636,6 +636,25 @@ tables[31].df.iloc[11, 6] = "Y " + tables[31].df.iloc[11, 6]
 modes = tables[31].df.iloc[11, 4].split()
 tables[31].df.iloc[10:13, 4] = [modes[0], modes[1] + modes[2] + modes[3], modes[4] + modes[5] + modes[6]]
 
+# TABLE 33 SEM I
+# Split column "mode" into its respective row
+modes = tables[32].df.iloc[6, 4].split()
+for i in range(2, 11):
+    tables[32].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+    split_row = tables[32].df.iloc[i, 6].split()
+    tables[32].df.iloc[i, 6] = f"{split_row[3]} {' '.join(split_row[:3])}"
+
+# TABLE 33 SEM II
+# Split "Sec Day Time Loc Mode Cap" into its respective column
+tables[32].df.iloc[12, :6] = tables[32].df.iloc[12, 0].split()
+
+# Split column "mode" into its respective row
+modes = tables[32].df.iloc[15, 4].split()
+for i in range(13, 18):
+    tables[32].df.iloc[i, 4] = modes[2 * (i - 13)] + modes[2 * (i - 13) + 1]
+    split_row = tables[32].df.iloc[i, 6].split()
+    tables[32].df.iloc[i, 6] = f"{split_row[3]} {' '.join(split_row[:3])}"
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
