@@ -27,53 +27,40 @@ matches = re.findall(pattern, extracted_text)
 
 tables = camelot.read_pdf('https://or.ump.edu.my/or/CourseCatalog/COURSE_CATALOG_IJA.pdf', pages='345-384')
 
-# TABLE 1 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[0].df.iloc[1, :6] = tables[0].df.iloc[1, 0].split()
 
-# Split column "mode" into its respective row
-modes = tables[0].df.iloc[3, 4].split()
-for i in range(2, 6):
-    tables[0].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+def fix_mode(table_index, starting_row, mode_row):
+    # Split column "mode" into its respective row
+    modes = tables[table_index].df.iloc[mode_row, 4].split()
+    for i in range(starting_row, starting_row + len(modes) // 2):
+        mode_offset = 2 * (i - starting_row)
+        tables[table_index].df.iloc[i, 4] = modes[mode_offset] + modes[mode_offset + 1]
+
+
+def clean_table(table_index, header_row, mode_row):
+    # Split header into its respective column
+    header_elements = tables[table_index].df.iloc[header_row, 0].split()
+    tables[table_index].df.iloc[header_row, :len(header_elements)] = header_elements
+    starting_row = header_row + 1
+    fix_mode(table_index, starting_row, mode_row)
+
+
+# TABLE 1 SEM I
+clean_table(0, 1, 3)
 
 # TABLE 2 SEM I
-# Split column "mode" into its respective row
-modes = tables[1].df.iloc[3, 4].split()
-for i in range(2, 6):
-    tables[1].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+fix_mode(1, 2, 3)
 
 # TABLE 3 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[2].df.iloc[1, :6] = tables[2].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[2].df.iloc[10, 4].split()
-for i in range(2, 19):
-    tables[2].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(2, 1, 10)
 
 # TABLE 3 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[2].df.iloc[20, :6] = tables[2].df.iloc[20, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[2].df.iloc[29, 4].split()
-for i in range(21, 38):
-    tables[2].df.iloc[i, 4] = modes[2 * (i - 21)] + modes[2 * (i - 21) + 1]
+clean_table(2, 20, 29)
 
 # TABLE 4 SEM I
-# Split column "mode" into its respective row
-modes = tables[3].df.iloc[3, 4].split()
-for i in range(2, 6):
-    tables[3].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+fix_mode(3, 2, 3)
 
 # TABLE 5 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[4].df.iloc[1, :6] = tables[4].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[4].df.iloc[3, 4].split()
-for i in range(2, 6):
-    tables[4].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(4, 1, 3)
 
 # TABLE 6 SEM I
 # Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
@@ -100,22 +87,10 @@ tables[5].df.iloc[3, 6] = row2[5]
 tables[5].df.iloc[3, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
 
 # TABLE 6 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[5].df.iloc[5, :6] = tables[5].df.iloc[5, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[5].df.iloc[11, 4].split()
-for i in range(6, 18):
-    tables[5].df.iloc[i, 4] = modes[2 * (i - 6)] + modes[2 * (i - 6) + 1]
+clean_table(5, 5, 11)
 
 # TABLE 7 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[6].df.iloc[1, :6] = tables[6].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[6].df.iloc[7, 4].split()
-for i in range(2, 14):
-    tables[6].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(6, 1, 7)
 
 # TABLE 7 SEM II
 # Split "Sec Day Time Loc Mode Cap" into its respective column
@@ -142,106 +117,40 @@ tables[6].df.iloc[17, 6] = row2[5] + ' ' + row2[6] + ' ' + row2[7] + ' ' + row2[
 tables[6].df.iloc[17, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
 
 # TABLE 8 SEM I
-# Split column "mode" into its respective row
-modes = tables[7].df.iloc[3, 4].split()
-for i in range(2, 5):
-    tables[7].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+fix_mode(7, 2, 3)
 
 # TABLE 9 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[8].df.iloc[1, :6] = tables[8].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[8].df.iloc[6, 4].split()
-for i in range(2, 12):
-    tables[8].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(8, 1, 6)
 
 # TABLE 10 SEM I
-# Split column "mode" into its respective row
-modes = tables[9].df.iloc[4, 4].split()
-for i in range(2, 8):
-    tables[9].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+fix_mode(9, 2, 4)
 
 # TABLE 11 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[10].df.iloc[1, :6] = tables[10].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[10].df.iloc[6, 4].split()
-for i in range(2, 12):
-    tables[10].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(10, 1, 6)
 
 # TABLE 12 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[11].df.iloc[1, :6] = tables[11].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[11].df.iloc[4, 4].split()
-for i in range(2, 7):
-    tables[11].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(11, 1, 4)
 
 # TABLE 12 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[11].df.iloc[8, :6] = tables[11].df.iloc[8, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[11].df.iloc[10, 4].split()
-for i in range(9, 13):
-    tables[11].df.iloc[i, 4] = modes[2 * (i - 9)] + modes[2 * (i - 9) + 1]
+clean_table(11, 8, 10)
 
 # TABLE 13 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[12].df.iloc[1, :6] = tables[12].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[12].df.iloc[4, 4].split()
-for i in range(2, 8):
-    tables[12].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(12, 1, 4)
 
 # TABLE 13 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[12].df.iloc[9, :6] = tables[12].df.iloc[9, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[12].df.iloc[15, 4].split()
-for i in range(10, 22):
-    tables[12].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
+clean_table(12, 9, 15)
 
 # TABLE 14 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[13].df.iloc[1, :6] = tables[13].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[13].df.iloc[4, 4].split()
-for i in range(2, 7):
-    tables[13].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(13, 1, 4)
 
 # TABLE 14 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[13].df.iloc[8, :6] = tables[13].df.iloc[8, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[13].df.iloc[13, 4].split()
-for i in range(9, 18):
-    tables[13].df.iloc[i, 4] = modes[2 * (i - 9)] + modes[2 * (i - 9) + 1]
+clean_table(13, 8, 13)
 
 # TABLE 15 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[14].df.iloc[1, :6] = tables[14].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[14].df.iloc[3, 4].split()
-for i in range(2, 6):
-    tables[14].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(14, 1, 3)
 
 # TABLE 15 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[14].df.iloc[7, :6] = tables[14].df.iloc[7, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[14].df.iloc[9, 4].split()
-for i in range(8, 12):
-    tables[14].df.iloc[i, 4] = modes[2 * (i - 8)] + modes[2 * (i - 8) + 1]
+clean_table(14, 7, 9)
 
 # TABLE 16 SEM I
 # Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
@@ -268,26 +177,10 @@ tables[15].df.iloc[3, 6] = row2[5] + ' ' + row2[6] + ' ' + row2[7] + ' ' + row2[
 tables[15].df.iloc[3, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
 
 # TABLE 16 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[15].df.iloc[5, :6] = tables[15].df.iloc[5, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[15].df.iloc[8, 4].split()
-for i in range(6, 12):
-    tables[15].df.iloc[i, 4] = modes[2 * (i - 6)] + modes[2 * (i - 6) + 1]
+clean_table(15, 5, 8)
 
 # TABLE 17 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[16].df.iloc[1, :6] = tables[16].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[16].df.iloc[4, 4].split()
-tables[16].df.iloc[2, 4] = modes[0]
-tables[16].df.iloc[3, 4] = modes[1]
-tables[16].df.iloc[4, 4] = modes[2] + modes[3]
-tables[16].df.iloc[5, 4] = modes[4]
-tables[16].df.iloc[6, 4] = modes[5]
-tables[16].df.iloc[7, 4] = modes[6] + modes[7]
+clean_table(16, 1, 4)
 
 # TABLE 17 SEM II
 # Split "Sec Day Time Loc Mode Cap" into its respective column
@@ -344,49 +237,19 @@ tables[17].df.iloc[13, 6] = row1[1] + ' ' + row2[9] + ' ' + row2[10] + ' ' + row
 tables[17].df.iloc[13, 7] = row2[12] + ' ' + row2[13] + ' ' + row2[14]
 
 # TABLE 19 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[18].df.iloc[1, :6] = tables[18].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[18].df.iloc[6, 4].split()
-for i in range(2, 11):
-    tables[18].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(18, 1, 6)
 
 # TABLE 19 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[18].df.iloc[12, :6] = tables[18].df.iloc[12, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[18].df.iloc[17, 4].split()
-for i in range(13, 22):
-    tables[18].df.iloc[i, 4] = modes[2 * (i - 13)] + modes[2 * (i - 13) + 1]
+clean_table(18, 12, 17)
 
 # TABLE 20 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[19].df.iloc[1, :6] = tables[19].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[19].df.iloc[4, 4].split()
-for i in range(2, 8):
-    tables[19].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(19, 1, 4)
 
 # TABLE 20 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[19].df.iloc[9, :6] = tables[19].df.iloc[9, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[19].df.iloc[11, 4].split()
-for i in range(10, 13):
-    tables[19].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
+clean_table(19, 9, 11)
 
 # TABLE 21 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[20].df.iloc[1, :6] = tables[20].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[20].df.iloc[5, 4].split()
-for i in range(2, 10):
-    tables[20].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(20, 1, 5)
 
 # TABLE 21 SEM II
 # Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
@@ -413,22 +276,10 @@ tables[20].df.iloc[13, 6] = row2[5]
 tables[20].df.iloc[13, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
 
 # TABLE 22 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[21].df.iloc[1, :6] = tables[21].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[21].df.iloc[4, 4].split()
-for i in range(2, 8):
-    tables[21].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(21, 1, 4)
 
 # TABLE 22 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[21].df.iloc[9, :6] = tables[19].df.iloc[9, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[21].df.iloc[16, 4].split()
-for i in range(10, 24):
-    tables[21].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
+clean_table(21, 9, 16)
 
 # TABLE 23 SEM I
 # Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
@@ -455,154 +306,55 @@ tables[22].df.iloc[3, 6] = row2[5]
 tables[22].df.iloc[3, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
 
 # TABLE 23 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[22].df.iloc[5, :6] = tables[22].df.iloc[5, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[22].df.iloc[10, 4].split()
-for i in range(6, 16):
-    tables[22].df.iloc[i, 4] = modes[2 * (i - 6)] + modes[2 * (i - 6) + 1]
+clean_table(22, 5, 10)
 
 # TABLE 24 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[23].df.iloc[1, :6] = tables[23].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[23].df.iloc[6, 4].split()
-for i in range(2, 11):
-    tables[23].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(23, 1, 6)
 
 # TABLE 24 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[23].df.iloc[12, :6] = tables[23].df.iloc[12, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[23].df.iloc[17, 4].split()
-for i in range(13, 22):
-    tables[23].df.iloc[i, 4] = modes[2 * (i - 13)] + modes[2 * (i - 13) + 1]
+clean_table(23, 12, 17)
 
 # TABLE 25 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[24].df.iloc[1, :6] = tables[24].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[24].df.iloc[4, 4].split()
-for i in range(2, 7):
-    tables[24].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(24, 1, 4)
 
 # TABLE 25 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[24].df.iloc[8, :6] = tables[24].df.iloc[8, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[24].df.iloc[11, 4].split()
-for i in range(9, 14):
-    tables[24].df.iloc[i, 4] = modes[2 * (i - 9)] + modes[2 * (i - 9) + 1]
+clean_table(24, 8, 11)
 
 # TABLE 26 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[25].df.iloc[1, :6] = tables[25].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[25].df.iloc[6, 4].split()
-for i in range(2, 11):
-    tables[25].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(25, 1, 6)
 
 # TABLE 26 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[25].df.iloc[12, :6] = tables[25].df.iloc[12, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[25].df.iloc[16, 4].split()
-for i in range(13, 21):
-    tables[25].df.iloc[i, 4] = modes[2 * (i - 13)] + modes[2 * (i - 13) + 1]
+clean_table(25, 12, 16)
 
 # TABLE 27 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[26].df.iloc[1, :6] = tables[26].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[26].df.iloc[4, 4].split()
-for i in range(2, 7):
-    tables[26].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(26, 1, 4)
 
 # TABLE 27 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[26].df.iloc[8, :6] = tables[26].df.iloc[8, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[26].df.iloc[10, 4].split()
-for i in range(9, 12):
-    tables[26].df.iloc[i, 4] = modes[2 * (i - 9)] + modes[2 * (i - 9) + 1]
+clean_table(26, 8, 10)
 
 # TABLE 28 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[27].df.iloc[1, :6] = tables[27].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[27].df.iloc[3, 4].split()
-for i in range(2, 5):
-    tables[27].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(27, 1, 3)
 
 # TABLE 28 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[27].df.iloc[6, :6] = tables[27].df.iloc[6, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[27].df.iloc[9, 4].split()
-for i in range(7, 13):
-    tables[27].df.iloc[i, 4] = modes[2 * (i - 7)] + modes[2 * (i - 7) + 1]
+clean_table(27, 6, 9)
 
 # TABLE 29 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[28].df.iloc[1, :6] = tables[28].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[28].df.iloc[3, 4].split()
-for i in range(2, 5):
-    tables[28].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(28, 1, 3)
 
 # TABLE 29 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[28].df.iloc[6, :6] = tables[28].df.iloc[6, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[28].df.iloc[9, 4].split()
-for i in range(7, 12):
-    tables[28].df.iloc[i, 4] = modes[2 * (i - 7)] + modes[2 * (i - 7) + 1]
+clean_table(28, 6, 9)
 
 # TABLE 30 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[29].df.iloc[1, :6] = tables[29].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[29].df.iloc[3, 4].split()
-for i in range(2, 5):
-    tables[29].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(29, 1, 3)
 
 # TABLE 30 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[29].df.iloc[6, :6] = tables[29].df.iloc[6, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[29].df.iloc[9, 4].split()
-for i in range(7, 12):
-    tables[29].df.iloc[i, 4] = modes[2 * (i - 7)] + modes[2 * (i - 7) + 1]
+clean_table(29, 6, 9)
 
 # TABLE 31 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[30].df.iloc[1, :6] = tables[30].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[30].df.iloc[4, 4].split()
-for i in range(2, 8):
-    tables[30].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(30, 1, 4)
 
 # TABLE 31 SEM II
-# Split column "mode" into its respective row
-modes = tables[30].df.iloc[11, 4].split()
-for i in range(10, 13):
-    tables[30].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
+fix_mode(30, 10, 11)
 
 # TABLE 32 SEM I
 # Split "Sec Day Time Loc Mode Cap" into its respective column
@@ -656,22 +408,10 @@ for i in range(13, 18):
     tables[32].df.iloc[i, 6] = f"{split_row[3]} {' '.join(split_row[:3])}"
 
 # TABLE 34 SEM I
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[33].df.iloc[1, :6] = tables[33].df.iloc[1, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[33].df.iloc[4, 4].split()
-for i in range(2, 8):
-    tables[33].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+clean_table(33, 1, 4)
 
 # TABLE 34 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[33].df.iloc[9, :6] = tables[33].df.iloc[9, 0].split()
-
-# Split column "mode" into its respective row
-modes = tables[33].df.iloc[11, 4].split()
-for i in range(10, 13):
-    tables[33].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
+clean_table(33, 9, 11)
 
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
