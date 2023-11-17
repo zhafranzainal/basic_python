@@ -447,6 +447,12 @@ tables[35].df.iloc[3, 5] = row2[4] + ' ' + row2[14]
 tables[35].df.iloc[3, 6] = row2[5] + ' ' + row2[6] + ' ' + row2[7] + ' ' + row2[8]
 tables[35].df.iloc[3, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
 
+# TABLE 37 SEM I
+clean_table(36, 1, 7)
+
+# TABLE 37 SEM II
+clean_table(36, 15, 18)
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
