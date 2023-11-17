@@ -519,6 +519,34 @@ tables[41].df.iloc[1, :6] = tables[41].df.iloc[1, 0].split()
 # Split "Sec Day Time Loc Mode Cap" into its respective column
 tables[41].df.iloc[4, :6] = tables[41].df.iloc[4, 0].split()
 
+# TABLE 43 SEM II
+tables[42].df = tables[42].df.reindex(columns=[*tables[42].df.columns, *range(8)])
+tables[42].df = tables[42].df.iloc[:, 1:].reset_index(drop=True)
+tables[42].df = tables[42].df.fillna('')
+
+# Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
+tables[42].df.iloc[1, :8] = tables[42].df.iloc[1, 0].split()
+
+row1 = tables[42].df.iloc[2, 0].split()
+tables[42].df.iloc[2, 0] = row1[4]
+tables[42].df.iloc[2, 1] = row1[5]
+tables[42].df.iloc[2, 2] = row1[6] + ' ' + row1[13]
+tables[42].df.iloc[2, 3] = row1[7] + ' ' + row1[14]
+tables[42].df.iloc[2, 4] = row1[0] + row1[1]
+tables[42].df.iloc[2, 5] = row1[8] + ' ' + row1[15]
+tables[42].df.iloc[2, 6] = row1[9]
+tables[42].df.iloc[2, 7] = row1[10] + ' ' + row1[11] + ' ' + row1[12]
+
+row2 = tables[42].df.iloc[3, 0].split()
+tables[42].df.iloc[3, 0] = row2[0]
+tables[42].df.iloc[3, 1] = row2[1]
+tables[42].df.iloc[3, 2] = row2[2] + ' ' + row2[9]
+tables[42].df.iloc[3, 3] = row2[3] + ' ' + row2[10]
+tables[42].df.iloc[3, 4] = row1[2] + row1[3]
+tables[42].df.iloc[3, 5] = row2[4] + ' ' + row2[11]
+tables[42].df.iloc[3, 6] = row2[5]
+tables[42].df.iloc[3, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
