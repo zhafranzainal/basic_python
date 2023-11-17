@@ -32,13 +32,13 @@ tables = camelot.read_pdf('https://or.ump.edu.my/or/CourseCatalog/COURSE_CATALOG
 tables[0].df.iloc[1, :6] = tables[0].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[0].df.iloc[3, 4].split()[:8]
+modes = tables[0].df.iloc[3, 4].split()
 for i in range(2, 6):
     tables[0].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
 # TABLE 2 SEM I
 # Split column "mode" into its respective row
-modes = tables[1].df.iloc[3, 4].split()[:8]
+modes = tables[1].df.iloc[3, 4].split()
 for i in range(2, 6):
     tables[1].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -47,7 +47,7 @@ for i in range(2, 6):
 tables[2].df.iloc[1, :6] = tables[2].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[2].df.iloc[10, 4].split()[:34]
+modes = tables[2].df.iloc[10, 4].split()
 for i in range(2, 19):
     tables[2].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -56,13 +56,13 @@ for i in range(2, 19):
 tables[2].df.iloc[20, :6] = tables[2].df.iloc[20, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[2].df.iloc[29, 4].split()[:34]
+modes = tables[2].df.iloc[29, 4].split()
 for i in range(21, 38):
     tables[2].df.iloc[i, 4] = modes[2 * (i - 21)] + modes[2 * (i - 21) + 1]
 
 # TABLE 4 SEM I
 # Split column "mode" into its respective row
-modes = tables[3].df.iloc[3, 4].split()[:8]
+modes = tables[3].df.iloc[3, 4].split()
 for i in range(2, 6):
     tables[3].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -71,7 +71,7 @@ for i in range(2, 6):
 tables[4].df.iloc[1, :6] = tables[4].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[4].df.iloc[3, 4].split()[:8]
+modes = tables[4].df.iloc[3, 4].split()
 for i in range(2, 6):
     tables[4].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -104,7 +104,7 @@ tables[5].df.iloc[3, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
 tables[5].df.iloc[5, :6] = tables[5].df.iloc[5, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[5].df.iloc[11, 4].split()[:24]
+modes = tables[5].df.iloc[11, 4].split()
 for i in range(6, 18):
     tables[5].df.iloc[i, 4] = modes[2 * (i - 6)] + modes[2 * (i - 6) + 1]
 
@@ -113,7 +113,7 @@ for i in range(6, 18):
 tables[6].df.iloc[1, :6] = tables[6].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[6].df.iloc[7, 4].split()[:24]
+modes = tables[6].df.iloc[7, 4].split()
 for i in range(2, 14):
     tables[6].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -143,7 +143,7 @@ tables[6].df.iloc[17, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
 
 # TABLE 8 SEM I
 # Split column "mode" into its respective row
-modes = tables[7].df.iloc[3, 4].split()[:6]
+modes = tables[7].df.iloc[3, 4].split()
 for i in range(2, 5):
     tables[7].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -152,13 +152,13 @@ for i in range(2, 5):
 tables[8].df.iloc[1, :6] = tables[8].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[8].df.iloc[6, 4].split()[:20]
+modes = tables[8].df.iloc[6, 4].split()
 for i in range(2, 12):
     tables[8].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
 # TABLE 10 SEM I
 # Split column "mode" into its respective row
-modes = tables[9].df.iloc[4, 4].split()[:12]
+modes = tables[9].df.iloc[4, 4].split()
 for i in range(2, 8):
     tables[9].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -167,7 +167,7 @@ for i in range(2, 8):
 tables[10].df.iloc[1, :6] = tables[10].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[10].df.iloc[6, 4].split()[:20]
+modes = tables[10].df.iloc[6, 4].split()
 for i in range(2, 12):
     tables[10].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -176,7 +176,7 @@ for i in range(2, 12):
 tables[11].df.iloc[1, :6] = tables[11].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[11].df.iloc[4, 4].split()[:10]
+modes = tables[11].df.iloc[4, 4].split()
 for i in range(2, 7):
     tables[11].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -185,7 +185,7 @@ for i in range(2, 7):
 tables[11].df.iloc[8, :6] = tables[11].df.iloc[8, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[11].df.iloc[10, 4].split()[:10]
+modes = tables[11].df.iloc[10, 4].split()
 for i in range(9, 13):
     tables[11].df.iloc[i, 4] = modes[2 * (i - 9)] + modes[2 * (i - 9) + 1]
 
@@ -194,7 +194,7 @@ for i in range(9, 13):
 tables[12].df.iloc[1, :6] = tables[12].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[12].df.iloc[4, 4].split()[:12]
+modes = tables[12].df.iloc[4, 4].split()
 for i in range(2, 8):
     tables[12].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -203,7 +203,7 @@ for i in range(2, 8):
 tables[12].df.iloc[9, :6] = tables[12].df.iloc[9, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[12].df.iloc[15, 4].split()[:24]
+modes = tables[12].df.iloc[15, 4].split()
 for i in range(10, 22):
     tables[12].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
 
@@ -212,7 +212,7 @@ for i in range(10, 22):
 tables[13].df.iloc[1, :6] = tables[13].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[13].df.iloc[4, 4].split()[:10]
+modes = tables[13].df.iloc[4, 4].split()
 for i in range(2, 7):
     tables[13].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -221,7 +221,7 @@ for i in range(2, 7):
 tables[13].df.iloc[8, :6] = tables[13].df.iloc[8, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[13].df.iloc[13, 4].split()[:18]
+modes = tables[13].df.iloc[13, 4].split()
 for i in range(9, 18):
     tables[13].df.iloc[i, 4] = modes[2 * (i - 9)] + modes[2 * (i - 9) + 1]
 
@@ -230,7 +230,7 @@ for i in range(9, 18):
 tables[14].df.iloc[1, :6] = tables[14].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[14].df.iloc[3, 4].split()[:8]
+modes = tables[14].df.iloc[3, 4].split()
 for i in range(2, 6):
     tables[14].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -239,7 +239,7 @@ for i in range(2, 6):
 tables[14].df.iloc[7, :6] = tables[14].df.iloc[7, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[14].df.iloc[9, 4].split()[:8]
+modes = tables[14].df.iloc[9, 4].split()
 for i in range(8, 12):
     tables[14].df.iloc[i, 4] = modes[2 * (i - 8)] + modes[2 * (i - 8) + 1]
 
@@ -272,7 +272,7 @@ tables[15].df.iloc[3, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
 tables[15].df.iloc[5, :6] = tables[15].df.iloc[5, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[15].df.iloc[8, 4].split()[:12]
+modes = tables[15].df.iloc[8, 4].split()
 for i in range(6, 12):
     tables[15].df.iloc[i, 4] = modes[2 * (i - 6)] + modes[2 * (i - 6) + 1]
 
@@ -281,7 +281,7 @@ for i in range(6, 12):
 tables[16].df.iloc[1, :6] = tables[16].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[16].df.iloc[4, 4].split()[:8]
+modes = tables[16].df.iloc[4, 4].split()
 tables[16].df.iloc[2, 4] = modes[0]
 tables[16].df.iloc[3, 4] = modes[1]
 tables[16].df.iloc[4, 4] = modes[2] + modes[3]
@@ -308,7 +308,7 @@ tables[16].df.iloc[10:13, 4] = [column4[0], column4[1] + column4[2] + column4[3]
 tables[17].df.iloc[1, :6] = tables[17].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[17].df.iloc[5, 4].split()[:12]
+modes = tables[17].df.iloc[5, 4].split()
 tables[17].df.iloc[2, 4] = modes[0] + modes[1]
 tables[17].df.iloc[3, 4] = modes[2] + modes[3]
 tables[17].df.iloc[4, 4] = modes[4]
@@ -348,7 +348,7 @@ tables[17].df.iloc[13, 7] = row2[12] + ' ' + row2[13] + ' ' + row2[14]
 tables[18].df.iloc[1, :6] = tables[18].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[18].df.iloc[6, 4].split()[:18]
+modes = tables[18].df.iloc[6, 4].split()
 for i in range(2, 11):
     tables[18].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -357,7 +357,7 @@ for i in range(2, 11):
 tables[18].df.iloc[12, :6] = tables[18].df.iloc[12, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[18].df.iloc[17, 4].split()[:18]
+modes = tables[18].df.iloc[17, 4].split()
 for i in range(13, 22):
     tables[18].df.iloc[i, 4] = modes[2 * (i - 13)] + modes[2 * (i - 13) + 1]
 
@@ -366,7 +366,7 @@ for i in range(13, 22):
 tables[19].df.iloc[1, :6] = tables[19].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[19].df.iloc[4, 4].split()[:12]
+modes = tables[19].df.iloc[4, 4].split()
 for i in range(2, 8):
     tables[19].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -375,7 +375,7 @@ for i in range(2, 8):
 tables[19].df.iloc[9, :6] = tables[19].df.iloc[9, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[19].df.iloc[11, 4].split()[:6]
+modes = tables[19].df.iloc[11, 4].split()
 for i in range(10, 13):
     tables[19].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
 
@@ -384,7 +384,7 @@ for i in range(10, 13):
 tables[20].df.iloc[1, :6] = tables[20].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[20].df.iloc[5, 4].split()[:16]
+modes = tables[20].df.iloc[5, 4].split()
 for i in range(2, 10):
     tables[20].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -417,7 +417,7 @@ tables[20].df.iloc[13, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
 tables[21].df.iloc[1, :6] = tables[21].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[21].df.iloc[4, 4].split()[:12]
+modes = tables[21].df.iloc[4, 4].split()
 for i in range(2, 8):
     tables[21].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -426,7 +426,7 @@ for i in range(2, 8):
 tables[21].df.iloc[9, :6] = tables[19].df.iloc[9, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[21].df.iloc[16, 4].split()[:28]
+modes = tables[21].df.iloc[16, 4].split()
 for i in range(10, 24):
     tables[21].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
 
@@ -459,7 +459,7 @@ tables[22].df.iloc[3, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
 tables[22].df.iloc[5, :6] = tables[22].df.iloc[5, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[22].df.iloc[10, 4].split()[:20]
+modes = tables[22].df.iloc[10, 4].split()
 for i in range(6, 16):
     tables[22].df.iloc[i, 4] = modes[2 * (i - 6)] + modes[2 * (i - 6) + 1]
 
@@ -468,7 +468,7 @@ for i in range(6, 16):
 tables[23].df.iloc[1, :6] = tables[23].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[23].df.iloc[6, 4].split()[:18]
+modes = tables[23].df.iloc[6, 4].split()
 for i in range(2, 11):
     tables[23].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -477,7 +477,7 @@ for i in range(2, 11):
 tables[23].df.iloc[12, :6] = tables[23].df.iloc[12, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[23].df.iloc[17, 4].split()[:18]
+modes = tables[23].df.iloc[17, 4].split()
 for i in range(13, 22):
     tables[23].df.iloc[i, 4] = modes[2 * (i - 13)] + modes[2 * (i - 13) + 1]
 
@@ -486,7 +486,7 @@ for i in range(13, 22):
 tables[24].df.iloc[1, :6] = tables[24].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[24].df.iloc[4, 4].split()[:10]
+modes = tables[24].df.iloc[4, 4].split()
 for i in range(2, 7):
     tables[24].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -495,7 +495,7 @@ for i in range(2, 7):
 tables[24].df.iloc[8, :6] = tables[24].df.iloc[8, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[24].df.iloc[11, 4].split()[:10]
+modes = tables[24].df.iloc[11, 4].split()
 for i in range(9, 14):
     tables[24].df.iloc[i, 4] = modes[2 * (i - 9)] + modes[2 * (i - 9) + 1]
 
@@ -504,7 +504,7 @@ for i in range(9, 14):
 tables[25].df.iloc[1, :6] = tables[25].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[25].df.iloc[6, 4].split()[:18]
+modes = tables[25].df.iloc[6, 4].split()
 for i in range(2, 11):
     tables[25].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -513,7 +513,7 @@ for i in range(2, 11):
 tables[25].df.iloc[12, :6] = tables[25].df.iloc[12, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[25].df.iloc[16, 4].split()[:16]
+modes = tables[25].df.iloc[16, 4].split()
 for i in range(13, 21):
     tables[25].df.iloc[i, 4] = modes[2 * (i - 13)] + modes[2 * (i - 13) + 1]
 
@@ -522,7 +522,7 @@ for i in range(13, 21):
 tables[26].df.iloc[1, :6] = tables[26].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[26].df.iloc[4, 4].split()[:10]
+modes = tables[26].df.iloc[4, 4].split()
 for i in range(2, 7):
     tables[26].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -531,7 +531,7 @@ for i in range(2, 7):
 tables[26].df.iloc[8, :6] = tables[26].df.iloc[8, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[26].df.iloc[10, 4].split()[:6]
+modes = tables[26].df.iloc[10, 4].split()
 for i in range(9, 12):
     tables[26].df.iloc[i, 4] = modes[2 * (i - 9)] + modes[2 * (i - 9) + 1]
 
@@ -540,7 +540,7 @@ for i in range(9, 12):
 tables[27].df.iloc[1, :6] = tables[27].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[27].df.iloc[3, 4].split()[:6]
+modes = tables[27].df.iloc[3, 4].split()
 for i in range(2, 5):
     tables[27].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -549,7 +549,7 @@ for i in range(2, 5):
 tables[27].df.iloc[6, :6] = tables[27].df.iloc[6, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[27].df.iloc[9, 4].split()[:12]
+modes = tables[27].df.iloc[9, 4].split()
 for i in range(7, 13):
     tables[27].df.iloc[i, 4] = modes[2 * (i - 7)] + modes[2 * (i - 7) + 1]
 
@@ -558,7 +558,7 @@ for i in range(7, 13):
 tables[28].df.iloc[1, :6] = tables[28].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[28].df.iloc[3, 4].split()[:6]
+modes = tables[28].df.iloc[3, 4].split()
 for i in range(2, 5):
     tables[28].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -567,7 +567,7 @@ for i in range(2, 5):
 tables[28].df.iloc[6, :6] = tables[28].df.iloc[6, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[28].df.iloc[9, 4].split()[:10]
+modes = tables[28].df.iloc[9, 4].split()
 for i in range(7, 12):
     tables[28].df.iloc[i, 4] = modes[2 * (i - 7)] + modes[2 * (i - 7) + 1]
 
@@ -576,7 +576,7 @@ for i in range(7, 12):
 tables[29].df.iloc[1, :6] = tables[29].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[29].df.iloc[3, 4].split()[:6]
+modes = tables[29].df.iloc[3, 4].split()
 for i in range(2, 5):
     tables[29].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
@@ -585,7 +585,7 @@ for i in range(2, 5):
 tables[29].df.iloc[6, :6] = tables[29].df.iloc[6, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[29].df.iloc[9, 4].split()[:10]
+modes = tables[29].df.iloc[9, 4].split()
 for i in range(7, 12):
     tables[29].df.iloc[i, 4] = modes[2 * (i - 7)] + modes[2 * (i - 7) + 1]
 
@@ -594,13 +594,13 @@ for i in range(7, 12):
 tables[30].df.iloc[1, :6] = tables[30].df.iloc[1, 0].split()[:6]
 
 # Split column "mode" into its respective row
-modes = tables[30].df.iloc[4, 4].split()[:12]
+modes = tables[30].df.iloc[4, 4].split()
 for i in range(2, 8):
     tables[30].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
 # TABLE 31 SEM II
 # Split column "mode" into its respective row
-modes = tables[30].df.iloc[11, 4].split()[:6]
+modes = tables[30].df.iloc[11, 4].split()
 for i in range(10, 13):
     tables[30].df.iloc[i, 4] = modes[2 * (i - 10)] + modes[2 * (i - 10) + 1]
 
@@ -610,7 +610,7 @@ tables[31].df.iloc[1, :6] = tables[31].df.iloc[1, 0].split()[:6]
 tables[31].df = tables[31].df.drop(11).reset_index(drop=True)
 
 # Split column "mode" into its respective row
-modes = tables[31].df.iloc[4, 4].split()[:8]
+modes = tables[31].df.iloc[4, 4].split()
 tables[31].df.iloc[2, 4] = modes[0]
 tables[31].df.iloc[3, 4] = modes[1]
 tables[31].df.iloc[4, 4] = modes[2] + modes[3]
