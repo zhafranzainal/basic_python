@@ -524,7 +524,7 @@ tables[26].df.iloc[1, :6] = tables[26].df.iloc[1, 0].split()[:6]
 # Split column "mode" into its respective row
 modes = tables[26].df.iloc[4, 4].split()[:10]
 for i in range(2, 7):
-    tables[25].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
+    tables[26].df.iloc[i, 4] = modes[2 * (i - 2)] + modes[2 * (i - 2) + 1]
 
 # TABLE 27 SEM II
 # Split "Sec Day Time Loc Mode Cap" into its respective column
