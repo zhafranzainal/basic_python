@@ -690,6 +690,14 @@ tables[51].df.iloc[8, 5] = row2[4] + ' ' + row2[11]
 tables[51].df.iloc[8, 6] = row2[5]
 tables[51].df.iloc[8, 7] = row2[6] + ' ' + row2[7] + ' ' + row2[8]
 
+# TABLE 53 SEM I
+# Split "Sec Day Time Loc Mode Cap" into its respective column
+tables[52].df.iloc[1, :6] = tables[52].df.iloc[1, 0].split()
+
+# TABLE 53 SEM II
+# Split "Sec Day Time Loc Mode Cap" into its respective column
+tables[52].df.iloc[4, :6] = tables[52].df.iloc[4, 0].split()
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
