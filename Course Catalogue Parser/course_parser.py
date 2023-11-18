@@ -790,6 +790,37 @@ clean_table(55, 1, 4)
 # TABLE 56 SEM II
 clean_table(55, 9, 17)
 
+# TABLE 57 SEM I
+tables[56].df = tables[56].df.drop(3).reset_index(drop=True)
+tables[56].df = tables[56].df.drop(4).reset_index(drop=True)
+tables[56].df = tables[56].df.drop(5).reset_index(drop=True)
+tables[56].df = tables[56].df.drop(7).reset_index(drop=True)
+tables[56].df = tables[56].df.drop(10).reset_index(drop=True)
+tables[56].df = tables[56].df.drop(11).reset_index(drop=True)
+tables[56].df = tables[56].df.drop(12).reset_index(drop=True)
+tables[56].df = tables[56].df.drop(13).reset_index(drop=True)
+tables[56].df = tables[56].df.drop(14).reset_index(drop=True)
+
+tables[56].df.insert(loc=1, column='1', value="")
+tables[56].df.columns = range(len(tables[56].df.columns))
+
+for i in range(2, 7):
+    split_column = tables[56].df.iloc[i, 0].split()
+    tables[56].df.iloc[i, 0] = split_column[0]
+    tables[56].df.iloc[i, 1] = split_column[1]
+
+clean_table(56, 1, 4)
+
+# TABLE 57 SEM II
+split_column = tables[54].df.iloc[5, 0].split()
+
+for i in range(9, 14):
+    split_column = tables[56].df.iloc[i, 0].split()
+    tables[56].df.iloc[i, 0] = split_column[0]
+    tables[56].df.iloc[i, 1] = split_column[1]
+
+clean_table(56, 8, 11)
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
