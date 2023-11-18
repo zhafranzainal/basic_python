@@ -29,6 +29,12 @@ tables = camelot.read_pdf('https://or.ump.edu.my/or/CourseCatalog/COURSE_CATALOG
                           line_scale=17)
 
 
+def split_header(table_index, header_row):
+    # Split header into its respective column
+    header_elements = tables[table_index].df.iloc[header_row, 0].split()
+    tables[table_index].df.iloc[header_row, :len(header_elements)] = header_elements
+
+
 def fix_mode(table_index, starting_row, mode_row):
     # Split column "mode" into its respective row
     modes = tables[table_index].df.iloc[mode_row, 4].split()
@@ -38,14 +44,14 @@ def fix_mode(table_index, starting_row, mode_row):
 
 
 def clean_table(table_index, header_row, mode_row):
-    # Split header into its respective column
-    header_elements = tables[table_index].df.iloc[header_row, 0].split()
-    tables[table_index].df.iloc[header_row, :len(header_elements)] = header_elements
+    split_header(table_index, header_row)
     starting_row = header_row + 1
     fix_mode(table_index, starting_row, mode_row)
 
 
-def clean_table_two_rows_has_exam(table_index, starting_row):
+def clean_table_two_rows_has_exam(table_index, header_row):
+    split_header(table_index, header_row)
+    starting_row = header_row + 1
     row1 = tables[table_index].df.iloc[starting_row, 0].split()
     tables[table_index].df.iloc[starting_row, 0] = row1[4]
     tables[table_index].df.iloc[starting_row, 1] = row1[5]
@@ -116,9 +122,7 @@ clean_table(5, 5, 11)
 clean_table(6, 1, 7)
 
 # TABLE 7 SEM II
-# Split "Sec Day Time Loc Mode Cap" into its respective column
-tables[6].df.iloc[15, :8] = tables[6].df.iloc[15, 0].split()
-clean_table_two_rows_has_exam(6, 16)
+clean_table_two_rows_has_exam(6, 15)
 
 # TABLE 8 SEM I
 fix_mode(7, 2, 3)
@@ -157,9 +161,7 @@ clean_table(14, 1, 3)
 clean_table(14, 7, 9)
 
 # TABLE 16 SEM I
-# Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
-tables[15].df.iloc[1, :8] = tables[15].df.iloc[1, 0].split()
-clean_table_two_rows_has_exam(15, 2)
+clean_table_two_rows_has_exam(15, 1)
 
 # TABLE 16 SEM II
 clean_table(15, 5, 8)
@@ -418,9 +420,7 @@ tables[35].df = tables[35].df.reindex(columns=[*tables[35].df.columns, *range(8)
 tables[35].df = tables[35].df.iloc[:, 1:].reset_index(drop=True)
 tables[35].df = tables[35].df.fillna('')
 
-# Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
-tables[35].df.iloc[1, :8] = tables[35].df.iloc[1, 0].split()
-clean_table_two_rows_has_exam(35, 2)
+clean_table_two_rows_has_exam(35, 1)
 
 # TABLE 37 SEM I
 clean_table(36, 1, 7)
@@ -581,14 +581,10 @@ tables[50].df = tables[50].df.reindex(columns=[*tables[50].df.columns, *range(8)
 tables[50].df = tables[50].df.iloc[:, 1:].reset_index(drop=True)
 tables[50].df = tables[50].df.fillna('')
 
-# Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
-tables[50].df.iloc[1, :8] = tables[50].df.iloc[1, 0].split()
-clean_table_two_rows_has_exam(50, 2)
+clean_table_two_rows_has_exam(50, 1)
 
 # TABLE 51 SEM II
-# Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
-tables[50].df.iloc[5, :8] = tables[50].df.iloc[5, 0].split()
-clean_table_two_rows_has_exam(50, 6)
+clean_table_two_rows_has_exam(50, 5)
 
 # TABLE 52 SEM I
 clean_table(51, 1, 3)
