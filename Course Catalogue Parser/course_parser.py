@@ -771,6 +771,36 @@ tables[62].df.iloc[7, 5] = row2[8] + ' ' + row2[14]
 tables[62].df.iloc[7, 6] = row2[1] + ' ' + row2[3] + ' ' + row2[4] + ' ' + row2[5]
 tables[62].df.iloc[7, 7] = ' '.join(row2[9:12])
 
+# TABLE 64 SEM I
+tables[63].df = tables[63].df.reindex(columns=[*tables[63].df.columns, *range(8)])
+tables[63].df = tables[63].df.iloc[:, 1:].reset_index(drop=True)
+tables[63].df = tables[63].df.fillna('')
+
+split_headers = tables[63].df.iloc[1, 0].split()
+correct_order = [split_headers[1], split_headers[2], split_headers[3], split_headers[4],
+                 split_headers[5], split_headers[6], split_headers[0], split_headers[7]]
+tables[63].df.iloc[1, :8] = correct_order
+
+row1 = tables[63].df.iloc[2, 0].split()
+tables[63].df.iloc[2, 0] = row1[4]
+tables[63].df.iloc[2, 1] = row1[6]
+tables[63].df.iloc[2, 2] = row1[10] + ' ' + row1[16]
+tables[63].df.iloc[2, 3] = row1[11] + ' ' + row1[17]
+tables[63].df.iloc[2, 4] = row1[0] + row1[1]
+tables[63].df.iloc[2, 5] = row1[12] + ' ' + row1[18]
+tables[63].df.iloc[2, 6] = row1[5] + ' ' + row1[7] + ' ' + row1[8] + ' ' + row1[9]
+tables[63].df.iloc[2, 7] = ' '.join(row1[13:16])
+
+row2 = tables[63].df.iloc[3, 0].split()
+tables[63].df.iloc[3, 0] = row2[0]
+tables[63].df.iloc[3, 1] = row2[2]
+tables[63].df.iloc[3, 2] = row2[6] + ' ' + row2[12]
+tables[63].df.iloc[3, 3] = row2[7] + ' ' + row2[13]
+tables[63].df.iloc[3, 4] = row1[2] + row1[3]
+tables[63].df.iloc[3, 5] = row2[8] + ' ' + row2[14]
+tables[63].df.iloc[3, 6] = row2[1] + ' ' + row2[3] + ' ' + row2[4] + ' ' + row2[5]
+tables[63].df.iloc[3, 7] = ' '.join(row2[9:12])
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
