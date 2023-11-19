@@ -100,6 +100,30 @@ def clean_table_two_rows_has_exam1(table_index, header_row):
     tables[table_index].df.iloc[starting_row + 1, 7] = ' '.join(row2[9:12])
 
 
+def clean_table_two_rows_has_exam2(table_index, header_row):
+    starting_row = header_row + 1
+
+    row1 = tables[table_index].df.iloc[starting_row, 0].split()
+    tables[table_index].df.iloc[starting_row, 0] = row1[4]
+    tables[table_index].df.iloc[starting_row, 1] = row1[6]
+    tables[table_index].df.iloc[starting_row, 2] = row1[10] + ' ' + row1[16]
+    tables[table_index].df.iloc[starting_row, 3] = row1[11] + ' ' + row1[17]
+    tables[table_index].df.iloc[starting_row, 4] = row1[0] + row1[1]
+    tables[table_index].df.iloc[starting_row, 5] = row1[12] + ' ' + row1[18]
+    tables[table_index].df.iloc[starting_row, 6] = row1[5] + ' ' + row1[7] + ' ' + row1[8] + ' ' + row1[9]
+    tables[table_index].df.iloc[starting_row, 7] = ' '.join(row1[13:16])
+
+    row2 = tables[table_index].df.iloc[starting_row + 1, 0].split()
+    tables[table_index].df.iloc[starting_row + 1, 0] = row2[0]
+    tables[table_index].df.iloc[starting_row + 1, 1] = row2[2]
+    tables[table_index].df.iloc[starting_row + 1, 2] = row2[6] + ' ' + row2[12]
+    tables[table_index].df.iloc[starting_row + 1, 3] = row2[7] + ' ' + row2[13]
+    tables[table_index].df.iloc[starting_row + 1, 4] = row1[2] + row1[3]
+    tables[table_index].df.iloc[starting_row + 1, 5] = row2[8] + ' ' + row2[14]
+    tables[table_index].df.iloc[starting_row + 1, 6] = row2[1] + ' ' + row2[3] + ' ' + row2[4] + ' ' + row2[5]
+    tables[table_index].df.iloc[starting_row + 1, 7] = ' '.join(row2[9:12])
+
+
 # TABLE 1 SEM I
 clean_table(0, 1, 3)
 
@@ -697,25 +721,7 @@ tables[61].df = tables[61].df.fillna('')
 
 tables[61].df.iloc[1, :8] = tables[61].df.iloc[1, 0].split()
 
-row1 = tables[61].df.iloc[2, 0].split()
-tables[61].df.iloc[2, 0] = row1[4]
-tables[61].df.iloc[2, 1] = row1[6]
-tables[61].df.iloc[2, 2] = row1[10] + ' ' + row1[16]
-tables[61].df.iloc[2, 3] = row1[11] + ' ' + row1[17]
-tables[61].df.iloc[2, 4] = row1[0] + row1[1]
-tables[61].df.iloc[2, 5] = row1[12] + ' ' + row1[18]
-tables[61].df.iloc[2, 6] = row1[5] + ' ' + row1[7] + ' ' + row1[8] + ' ' + row1[9]
-tables[61].df.iloc[2, 7] = ' '.join(row1[13:16])
-
-row2 = tables[61].df.iloc[3, 0].split()
-tables[61].df.iloc[3, 0] = row2[0]
-tables[61].df.iloc[3, 1] = row2[2]
-tables[61].df.iloc[3, 2] = row2[6] + ' ' + row2[12]
-tables[61].df.iloc[3, 3] = row2[7] + ' ' + row2[13]
-tables[61].df.iloc[3, 4] = row1[2] + row1[3]
-tables[61].df.iloc[3, 5] = row2[8] + ' ' + row2[14]
-tables[61].df.iloc[3, 6] = row2[1] + ' ' + row2[3] + ' ' + row2[4] + ' ' + row2[5]
-tables[61].df.iloc[3, 7] = ' '.join(row2[9:12])
+clean_table_two_rows_has_exam2(61, 1)
 
 # TABLE 63 SEM I
 tables[62].df = tables[62].df.reindex(columns=[*tables[62].df.columns, *range(8)])
@@ -751,25 +757,7 @@ correct_order = [split_headers[0], split_headers[1], split_headers[2], split_hea
                  split_headers[4], split_headers[5], split_headers[7], split_headers[6]]
 tables[62].df.iloc[5, :8] = correct_order
 
-row1 = tables[62].df.iloc[6, 0].split()
-tables[62].df.iloc[6, 0] = row1[4]
-tables[62].df.iloc[6, 1] = row1[6]
-tables[62].df.iloc[6, 2] = row1[10] + ' ' + row1[16]
-tables[62].df.iloc[6, 3] = row1[11] + ' ' + row1[17]
-tables[62].df.iloc[6, 4] = row1[0] + row1[1]
-tables[62].df.iloc[6, 5] = row1[12] + ' ' + row1[18]
-tables[62].df.iloc[6, 6] = row1[5] + ' ' + row1[7] + ' ' + row1[8] + ' ' + row1[9]
-tables[62].df.iloc[6, 7] = ' '.join(row1[13:16])
-
-row2 = tables[62].df.iloc[7, 0].split()
-tables[62].df.iloc[7, 0] = row2[0]
-tables[62].df.iloc[7, 1] = row2[2]
-tables[62].df.iloc[7, 2] = row2[6] + ' ' + row2[12]
-tables[62].df.iloc[7, 3] = row2[7] + ' ' + row2[13]
-tables[62].df.iloc[7, 4] = row1[2] + row1[3]
-tables[62].df.iloc[7, 5] = row2[8] + ' ' + row2[14]
-tables[62].df.iloc[7, 6] = row2[1] + ' ' + row2[3] + ' ' + row2[4] + ' ' + row2[5]
-tables[62].df.iloc[7, 7] = ' '.join(row2[9:12])
+clean_table_two_rows_has_exam2(62, 5)
 
 # TABLE 64 SEM I
 tables[63].df = tables[63].df.reindex(columns=[*tables[63].df.columns, *range(8)])
@@ -781,25 +769,7 @@ correct_order = [split_headers[1], split_headers[2], split_headers[3], split_hea
                  split_headers[5], split_headers[6], split_headers[0], split_headers[7]]
 tables[63].df.iloc[1, :8] = correct_order
 
-row1 = tables[63].df.iloc[2, 0].split()
-tables[63].df.iloc[2, 0] = row1[4]
-tables[63].df.iloc[2, 1] = row1[6]
-tables[63].df.iloc[2, 2] = row1[10] + ' ' + row1[16]
-tables[63].df.iloc[2, 3] = row1[11] + ' ' + row1[17]
-tables[63].df.iloc[2, 4] = row1[0] + row1[1]
-tables[63].df.iloc[2, 5] = row1[12] + ' ' + row1[18]
-tables[63].df.iloc[2, 6] = row1[5] + ' ' + row1[7] + ' ' + row1[8] + ' ' + row1[9]
-tables[63].df.iloc[2, 7] = ' '.join(row1[13:16])
-
-row2 = tables[63].df.iloc[3, 0].split()
-tables[63].df.iloc[3, 0] = row2[0]
-tables[63].df.iloc[3, 1] = row2[2]
-tables[63].df.iloc[3, 2] = row2[6] + ' ' + row2[12]
-tables[63].df.iloc[3, 3] = row2[7] + ' ' + row2[13]
-tables[63].df.iloc[3, 4] = row1[2] + row1[3]
-tables[63].df.iloc[3, 5] = row2[8] + ' ' + row2[14]
-tables[63].df.iloc[3, 6] = row2[1] + ' ' + row2[3] + ' ' + row2[4] + ' ' + row2[5]
-tables[63].df.iloc[3, 7] = ' '.join(row2[9:12])
+clean_table_two_rows_has_exam2(63, 1)
 
 # TABLE 65 SEM I
 fix_mode(64, 2, 3)
@@ -814,25 +784,7 @@ correct_order = [split_headers[1], split_headers[2], split_headers[3], split_hea
                  split_headers[5], split_headers[6], split_headers[0], split_headers[7]]
 tables[65].df.iloc[1, :8] = correct_order
 
-row1 = tables[65].df.iloc[2, 0].split()
-tables[65].df.iloc[2, 0] = row1[4]
-tables[65].df.iloc[2, 1] = row1[6]
-tables[65].df.iloc[2, 2] = row1[10] + ' ' + row1[16]
-tables[65].df.iloc[2, 3] = row1[11] + ' ' + row1[17]
-tables[65].df.iloc[2, 4] = row1[0] + row1[1]
-tables[65].df.iloc[2, 5] = row1[12] + ' ' + row1[18]
-tables[65].df.iloc[2, 6] = row1[5] + ' ' + row1[7] + ' ' + row1[8] + ' ' + row1[9]
-tables[65].df.iloc[2, 7] = ' '.join(row1[13:16])
-
-row2 = tables[65].df.iloc[3, 0].split()
-tables[65].df.iloc[3, 0] = row2[0]
-tables[65].df.iloc[3, 1] = row2[2]
-tables[65].df.iloc[3, 2] = row2[6] + ' ' + row2[12]
-tables[65].df.iloc[3, 3] = row2[7] + ' ' + row2[13]
-tables[65].df.iloc[3, 4] = row1[2] + row1[3]
-tables[65].df.iloc[3, 5] = row2[8] + ' ' + row2[14]
-tables[65].df.iloc[3, 6] = row2[1] + ' ' + row2[3] + ' ' + row2[4] + ' ' + row2[5]
-tables[65].df.iloc[3, 7] = ' '.join(row2[9:12])
+clean_table_two_rows_has_exam2(65, 1)
 
 # TABLE 67 SEM I
 clean_table(66, 1, 4)
