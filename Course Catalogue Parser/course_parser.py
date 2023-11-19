@@ -100,7 +100,7 @@ def clean_table_two_rows_has_exam1(table_index, header_row):
     tables[table_index].df.iloc[starting_row + 1, 7] = ' '.join(row2[9:12])
 
 
-def clean_table_two_rows_has_exam2(table_index, header_row):
+def clean_table_two_rows_has_exam3(table_index, header_row):
     starting_row = header_row + 1
 
     row1 = tables[table_index].df.iloc[starting_row, 0].split()
@@ -721,7 +721,7 @@ tables[61].df = tables[61].df.fillna('')
 
 tables[61].df.iloc[1, :8] = tables[61].df.iloc[1, 0].split()
 
-clean_table_two_rows_has_exam2(61, 1)
+clean_table_two_rows_has_exam3(61, 1)
 
 # TABLE 63 SEM I
 tables[62].df = tables[62].df.reindex(columns=[*tables[62].df.columns, *range(8)])
@@ -757,7 +757,7 @@ correct_order = [split_headers[0], split_headers[1], split_headers[2], split_hea
                  split_headers[4], split_headers[5], split_headers[7], split_headers[6]]
 tables[62].df.iloc[5, :8] = correct_order
 
-clean_table_two_rows_has_exam2(62, 5)
+clean_table_two_rows_has_exam3(62, 5)
 
 # TABLE 64 SEM I
 tables[63].df = tables[63].df.reindex(columns=[*tables[63].df.columns, *range(8)])
@@ -769,7 +769,7 @@ correct_order = [split_headers[1], split_headers[2], split_headers[3], split_hea
                  split_headers[5], split_headers[6], split_headers[0], split_headers[7]]
 tables[63].df.iloc[1, :8] = correct_order
 
-clean_table_two_rows_has_exam2(63, 1)
+clean_table_two_rows_has_exam3(63, 1)
 
 # TABLE 65 SEM I
 fix_mode(64, 2, 3)
@@ -784,7 +784,7 @@ correct_order = [split_headers[1], split_headers[2], split_headers[3], split_hea
                  split_headers[5], split_headers[6], split_headers[0], split_headers[7]]
 tables[65].df.iloc[1, :8] = correct_order
 
-clean_table_two_rows_has_exam2(65, 1)
+clean_table_two_rows_has_exam3(65, 1)
 
 # TABLE 67 SEM I
 clean_table(66, 1, 4)
