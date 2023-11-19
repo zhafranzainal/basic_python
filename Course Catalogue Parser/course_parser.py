@@ -50,7 +50,7 @@ def clean_table(table_index, header_row, mode_row):
     fix_mode(table_index, starting_row, mode_row)
 
 
-def clean_table_two_rows_has_exam(table_index, header_row):
+def clean_table_two_rows_has_exam1(table_index, header_row):
     split_header(table_index, header_row)
     starting_row = header_row + 1
 
@@ -128,7 +128,7 @@ clean_table(5, 5, 11)
 clean_table(6, 1, 7)
 
 # TABLE 7 SEM II
-clean_table_two_rows_has_exam(6, 15)
+clean_table_two_rows_has_exam1(6, 15)
 
 # TABLE 8 SEM I
 fix_mode(7, 2, 3)
@@ -167,7 +167,7 @@ clean_table(14, 1, 3)
 clean_table(14, 7, 9)
 
 # TABLE 16 SEM I
-clean_table_two_rows_has_exam(15, 1)
+clean_table_two_rows_has_exam1(15, 1)
 
 # TABLE 16 SEM II
 clean_table(15, 5, 8)
@@ -384,7 +384,7 @@ tables[35].df = tables[35].df.reindex(columns=[*tables[35].df.columns, *range(8)
 tables[35].df = tables[35].df.iloc[:, 1:].reset_index(drop=True)
 tables[35].df = tables[35].df.fillna('')
 
-clean_table_two_rows_has_exam(35, 1)
+clean_table_two_rows_has_exam1(35, 1)
 
 # TABLE 37 SEM I
 clean_table(36, 1, 7)
@@ -482,10 +482,10 @@ tables[50].df = tables[50].df.reindex(columns=[*tables[50].df.columns, *range(8)
 tables[50].df = tables[50].df.iloc[:, 1:].reset_index(drop=True)
 tables[50].df = tables[50].df.fillna('')
 
-clean_table_two_rows_has_exam(50, 1)
+clean_table_two_rows_has_exam1(50, 1)
 
 # TABLE 51 SEM II
-clean_table_two_rows_has_exam(50, 5)
+clean_table_two_rows_has_exam1(50, 5)
 
 # TABLE 52 SEM I
 clean_table(51, 1, 3)
