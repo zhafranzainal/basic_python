@@ -657,6 +657,36 @@ clean_table(58, 1, 4)
 # TABLE 59 SEM II
 clean_table(58, 8, 10)
 
+# TABLE 60 SEM I
+clean_table(59, 1, 3)
+
+# TABLE 60 SEM II
+# Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
+split_headers = tables[59].df.iloc[6, 0].split()
+correct_order = [split_headers[0], split_headers[1], split_headers[2], split_headers[3],
+                 split_headers[4], split_headers[5], split_headers[7], split_headers[6]]
+tables[59].df.iloc[6, :8] = correct_order
+
+row1 = tables[59].df.iloc[7, 0].split()
+tables[59].df.iloc[7, 0] = row1[5]
+tables[59].df.iloc[7, 1] = row1[6]
+tables[59].df.iloc[7, 2] = row1[7] + ' ' + row1[13]
+tables[59].df.iloc[7, 3] = row1[8] + ' ' + row1[14]
+tables[59].df.iloc[7, 4] = row1[0] + row1[1]
+tables[59].df.iloc[7, 5] = row1[9] + ' ' + row1[15]
+tables[59].df.iloc[7, 6] = row1[4]
+tables[59].df.iloc[7, 7] = ' '.join(row1[10:13])
+
+row2 = tables[59].df.iloc[8, 0].split()
+tables[59].df.iloc[8, 0] = row2[1]
+tables[59].df.iloc[8, 1] = row2[2]
+tables[59].df.iloc[8, 2] = row2[3] + ' ' + row2[9]
+tables[59].df.iloc[8, 3] = row2[4] + ' ' + row2[10]
+tables[59].df.iloc[8, 4] = row1[2] + row1[3]
+tables[59].df.iloc[8, 5] = row2[5] + ' ' + row2[11]
+tables[59].df.iloc[8, 6] = row2[0]
+tables[59].df.iloc[8, 7] = ' '.join(row2[6:9])
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
