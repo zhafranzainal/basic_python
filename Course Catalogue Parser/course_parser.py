@@ -25,7 +25,7 @@ extracted_text = re.sub(r'Couse Synopsis : .*?Campus', 'Campus', extracted_text,
 pattern = r"Semester (I|II) Course Code : ([A-Z]{3}\d{4})[\s\S]+?Course Name : (.+?)\d"
 matches = re.findall(pattern, extracted_text)
 
-tables = camelot.read_pdf('https://or.ump.edu.my/or/CourseCatalog/COURSE_CATALOG_IJA.pdf', pages='345-384',
+tables = camelot.read_pdf('https://or.ump.edu.my/or/CourseCatalog/COURSE_CATALOG_IJA.pdf', pages='345-381',
                           line_scale=17)
 
 
@@ -836,6 +836,9 @@ tables[65].df.iloc[3, 7] = ' '.join(row2[9:12])
 
 # TABLE 67 SEM I
 clean_table(66, 1, 4)
+
+# TABLE 68 SEM II
+fix_mode(67, 2, 4)
 
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
