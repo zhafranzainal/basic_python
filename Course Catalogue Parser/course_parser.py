@@ -50,31 +50,6 @@ def clean_table(table_index, header_row, mode_row):
     fix_mode(table_index, starting_row, mode_row)
 
 
-def clean_table_two_rows_has_exam1(table_index, header_row):
-    split_header(table_index, header_row)
-    starting_row = header_row + 1
-
-    row1 = tables[table_index].df.iloc[starting_row, 0].split()
-    tables[table_index].df.iloc[starting_row, 0] = row1[4]
-    tables[table_index].df.iloc[starting_row, 1] = row1[5]
-    tables[table_index].df.iloc[starting_row, 2] = row1[6] + ' ' + row1[16]
-    tables[table_index].df.iloc[starting_row, 3] = row1[7] + ' ' + row1[17]
-    tables[table_index].df.iloc[starting_row, 4] = row1[0] + row1[1]
-    tables[table_index].df.iloc[starting_row, 5] = row1[8] + ' ' + row1[18]
-    tables[table_index].df.iloc[starting_row, 6] = ' '.join(row1[9:13])
-    tables[table_index].df.iloc[starting_row, 7] = ' '.join(row1[13:16])
-
-    row2 = tables[table_index].df.iloc[starting_row + 1, 0].split()
-    tables[table_index].df.iloc[starting_row + 1, 0] = row2[0]
-    tables[table_index].df.iloc[starting_row + 1, 1] = row2[1]
-    tables[table_index].df.iloc[starting_row + 1, 2] = row2[2] + ' ' + row2[12]
-    tables[table_index].df.iloc[starting_row + 1, 3] = row2[3] + ' ' + row2[13]
-    tables[table_index].df.iloc[starting_row + 1, 4] = row1[2] + row1[3]
-    tables[table_index].df.iloc[starting_row + 1, 5] = row2[4] + ' ' + row2[14]
-    tables[table_index].df.iloc[starting_row + 1, 6] = ' '.join(row2[5:9])
-    tables[table_index].df.iloc[starting_row + 1, 7] = ' '.join(row2[9:12])
-
-
 def clean_table_two_rows_no_exam(table_index, header_row):
     split_header(table_index, header_row)
     starting_row = header_row + 1
@@ -98,6 +73,31 @@ def clean_table_two_rows_no_exam(table_index, header_row):
     tables[table_index].df.iloc[starting_row + 1, 5] = row2[4] + ' ' + row2[11]
     tables[table_index].df.iloc[starting_row + 1, 6] = row2[5]
     tables[table_index].df.iloc[starting_row + 1, 7] = ' '.join(row2[6:9])
+
+
+def clean_table_two_rows_has_exam1(table_index, header_row):
+    split_header(table_index, header_row)
+    starting_row = header_row + 1
+
+    row1 = tables[table_index].df.iloc[starting_row, 0].split()
+    tables[table_index].df.iloc[starting_row, 0] = row1[4]
+    tables[table_index].df.iloc[starting_row, 1] = row1[5]
+    tables[table_index].df.iloc[starting_row, 2] = row1[6] + ' ' + row1[16]
+    tables[table_index].df.iloc[starting_row, 3] = row1[7] + ' ' + row1[17]
+    tables[table_index].df.iloc[starting_row, 4] = row1[0] + row1[1]
+    tables[table_index].df.iloc[starting_row, 5] = row1[8] + ' ' + row1[18]
+    tables[table_index].df.iloc[starting_row, 6] = ' '.join(row1[9:13])
+    tables[table_index].df.iloc[starting_row, 7] = ' '.join(row1[13:16])
+
+    row2 = tables[table_index].df.iloc[starting_row + 1, 0].split()
+    tables[table_index].df.iloc[starting_row + 1, 0] = row2[0]
+    tables[table_index].df.iloc[starting_row + 1, 1] = row2[1]
+    tables[table_index].df.iloc[starting_row + 1, 2] = row2[2] + ' ' + row2[12]
+    tables[table_index].df.iloc[starting_row + 1, 3] = row2[3] + ' ' + row2[13]
+    tables[table_index].df.iloc[starting_row + 1, 4] = row1[2] + row1[3]
+    tables[table_index].df.iloc[starting_row + 1, 5] = row2[4] + ' ' + row2[14]
+    tables[table_index].df.iloc[starting_row + 1, 6] = ' '.join(row2[5:9])
+    tables[table_index].df.iloc[starting_row + 1, 7] = ' '.join(row2[9:12])
 
 
 # TABLE 1 SEM I
