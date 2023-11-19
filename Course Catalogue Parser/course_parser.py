@@ -690,6 +690,33 @@ tables[59].df.iloc[8, 7] = ' '.join(row2[6:9])
 # TABLE 61 SEM I
 clean_table(60, 1, 3)
 
+# TABLE 62 SEM II
+tables[61].df = tables[61].df.reindex(columns=[*tables[61].df.columns, *range(8)])
+tables[61].df = tables[61].df.iloc[:, 1:].reset_index(drop=True)
+tables[61].df = tables[61].df.fillna('')
+
+tables[61].df.iloc[1, :8] = tables[61].df.iloc[1, 0].split()
+
+row1 = tables[61].df.iloc[2, 0].split()
+tables[61].df.iloc[2, 0] = row1[4]
+tables[61].df.iloc[2, 1] = row1[6]
+tables[61].df.iloc[2, 2] = row1[10] + ' ' + row1[16]
+tables[61].df.iloc[2, 3] = row1[11] + ' ' + row1[17]
+tables[61].df.iloc[2, 4] = row1[0] + row1[1]
+tables[61].df.iloc[2, 5] = row1[12] + ' ' + row1[18]
+tables[61].df.iloc[2, 6] = row1[5] + ' ' + row1[7] + ' ' + row1[8] + ' ' + row1[9]
+tables[61].df.iloc[2, 7] = ' '.join(row1[13:16])
+
+row2 = tables[61].df.iloc[3, 0].split()
+tables[61].df.iloc[3, 0] = row2[0]
+tables[61].df.iloc[3, 1] = row2[2]
+tables[61].df.iloc[3, 2] = row2[6] + ' ' + row2[12]
+tables[61].df.iloc[3, 3] = row2[7] + ' ' + row2[13]
+tables[61].df.iloc[3, 4] = row1[2] + row1[3]
+tables[61].df.iloc[3, 5] = row2[8] + ' ' + row2[14]
+tables[61].df.iloc[3, 6] = row2[1] + ' ' + row2[3] + ' ' + row2[4] + ' ' + row2[5]
+tables[61].df.iloc[3, 7] = ' '.join(row2[9:12])
+
 # Display each table under its corresponding course code
 for i, match in enumerate(matches):
     print(f"{i + 1}. Course Code: {match[1]}")
