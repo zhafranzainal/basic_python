@@ -100,6 +100,31 @@ def clean_table_two_rows_has_exam1(table_index, header_row):
     tables[table_index].df.iloc[starting_row + 1, 7] = ' '.join(row2[9:12])
 
 
+def clean_table_two_rows_has_exam2(table_index, header_row):
+    split_header(table_index, header_row)
+    starting_row = header_row + 1
+
+    row1 = tables[table_index].df.iloc[starting_row, 0].split()
+    tables[table_index].df.iloc[starting_row, 0] = row1[8]
+    tables[table_index].df.iloc[starting_row, 1] = row1[9]
+    tables[table_index].df.iloc[starting_row, 2] = row1[10] + ' ' + row1[16]
+    tables[table_index].df.iloc[starting_row, 3] = row1[11] + ' ' + row1[17]
+    tables[table_index].df.iloc[starting_row, 4] = row1[0] + row1[1]
+    tables[table_index].df.iloc[starting_row, 5] = row1[12] + ' ' + row1[18]
+    tables[table_index].df.iloc[starting_row, 6] = ' '.join(row1[4:8])
+    tables[table_index].df.iloc[starting_row, 7] = ' '.join(row1[13:16])
+
+    row2 = tables[table_index].df.iloc[starting_row + 1, 0].split()
+    tables[table_index].df.iloc[starting_row + 1, 0] = row2[4]
+    tables[table_index].df.iloc[starting_row + 1, 1] = row2[5]
+    tables[table_index].df.iloc[starting_row + 1, 2] = row2[6] + ' ' + row2[12]
+    tables[table_index].df.iloc[starting_row + 1, 3] = row2[7] + ' ' + row2[13]
+    tables[table_index].df.iloc[starting_row + 1, 4] = row1[2] + row1[3]
+    tables[table_index].df.iloc[starting_row + 1, 5] = row2[8] + ' ' + row2[14]
+    tables[table_index].df.iloc[starting_row + 1, 6] = ' '.join(row2[0:4])
+    tables[table_index].df.iloc[starting_row + 1, 7] = ' '.join(row2[9:12])
+
+
 def clean_table_two_rows_has_exam3(table_index, header_row):
     starting_row = header_row + 1
 
@@ -533,25 +558,7 @@ tables[53].df = tables[53].df.fillna('')
 # Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
 tables[53].df.iloc[1, :8] = tables[53].df.iloc[1, 0].split()
 
-row1 = tables[53].df.iloc[2, 0].split()
-tables[53].df.iloc[2, 0] = row1[8]
-tables[53].df.iloc[2, 1] = row1[9]
-tables[53].df.iloc[2, 2] = row1[10] + ' ' + row1[16]
-tables[53].df.iloc[2, 3] = row1[11] + ' ' + row1[17]
-tables[53].df.iloc[2, 4] = row1[0] + row1[1]
-tables[53].df.iloc[2, 5] = row1[12] + ' ' + row1[18]
-tables[53].df.iloc[2, 6] = row1[4] + ' ' + row1[5] + ' ' + row1[6] + ' ' + row1[7]
-tables[53].df.iloc[2, 7] = row1[13] + ' ' + row1[14] + ' ' + row1[15]
-
-row2 = tables[53].df.iloc[3, 0].split()
-tables[53].df.iloc[3, 0] = row2[4]
-tables[53].df.iloc[3, 1] = row2[5]
-tables[53].df.iloc[3, 2] = row2[6] + ' ' + row2[12]
-tables[53].df.iloc[3, 3] = row2[7] + ' ' + row2[13]
-tables[53].df.iloc[3, 4] = row1[2] + row1[3]
-tables[53].df.iloc[3, 5] = row2[8] + ' ' + row2[14]
-tables[53].df.iloc[3, 6] = row2[0] + ' ' + row2[1] + ' ' + row2[2] + ' ' + row2[3]
-tables[53].df.iloc[3, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
+clean_table_two_rows_has_exam2(53, 1)
 
 # TABLE 55 SEM I
 tables[54].df = tables[54].df.reindex(columns=[*tables[54].df.columns, *range(8)])
@@ -564,25 +571,7 @@ correct_order = [split_headers[1], split_headers[2], split_headers[3], split_hea
                  split_headers[5], split_headers[6], split_headers[0], split_headers[7]]
 tables[54].df.iloc[1, :8] = correct_order
 
-row1 = tables[54].df.iloc[2, 0].split()
-tables[54].df.iloc[2, 0] = row1[8]
-tables[54].df.iloc[2, 1] = row1[9]
-tables[54].df.iloc[2, 2] = row1[10] + ' ' + row1[16]
-tables[54].df.iloc[2, 3] = row1[11] + ' ' + row1[17]
-tables[54].df.iloc[2, 4] = row1[0] + row1[1]
-tables[54].df.iloc[2, 5] = row1[12] + ' ' + row1[18]
-tables[54].df.iloc[2, 6] = row1[4] + ' ' + row1[5] + ' ' + row1[6] + ' ' + row1[7]
-tables[54].df.iloc[2, 7] = row1[13] + ' ' + row1[14] + ' ' + row1[15]
-
-row2 = tables[54].df.iloc[3, 0].split()
-tables[54].df.iloc[3, 0] = row2[4]
-tables[54].df.iloc[3, 1] = row2[5]
-tables[54].df.iloc[3, 2] = row2[6] + ' ' + row2[12]
-tables[54].df.iloc[3, 3] = row2[7] + ' ' + row2[13]
-tables[54].df.iloc[3, 4] = row1[2] + row1[3]
-tables[54].df.iloc[3, 5] = row2[8] + ' ' + row2[14]
-tables[54].df.iloc[3, 6] = row2[0] + ' ' + row2[1] + ' ' + row2[2] + ' ' + row2[3]
-tables[54].df.iloc[3, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
+clean_table_two_rows_has_exam2(54, 1)
 
 # TABLE 55 SEM II
 # Split "Sec Day Time Loc Mode Cap Exam Staff" into its respective column
@@ -591,25 +580,7 @@ correct_order = [split_headers[1], split_headers[2], split_headers[3], split_hea
                  split_headers[5], split_headers[6], split_headers[0], split_headers[7]]
 tables[54].df.iloc[5, :8] = correct_order
 
-row1 = tables[54].df.iloc[6, 0].split()
-tables[54].df.iloc[6, 0] = row1[8]
-tables[54].df.iloc[6, 1] = row1[9]
-tables[54].df.iloc[6, 2] = row1[10] + ' ' + row1[16]
-tables[54].df.iloc[6, 3] = row1[11] + ' ' + row1[17]
-tables[54].df.iloc[6, 4] = row1[0] + row1[1]
-tables[54].df.iloc[6, 5] = row1[12] + ' ' + row1[18]
-tables[54].df.iloc[6, 6] = row1[4] + ' ' + row1[5] + ' ' + row1[6] + ' ' + row1[7]
-tables[54].df.iloc[6, 7] = row1[13] + ' ' + row1[14] + ' ' + row1[15]
-
-row2 = tables[54].df.iloc[7, 0].split()
-tables[54].df.iloc[7, 0] = row2[4]
-tables[54].df.iloc[7, 1] = row2[5]
-tables[54].df.iloc[7, 2] = row2[6] + ' ' + row2[12]
-tables[54].df.iloc[7, 3] = row2[7] + ' ' + row2[13]
-tables[54].df.iloc[7, 4] = row1[2] + row1[3]
-tables[54].df.iloc[7, 5] = row2[8] + ' ' + row2[14]
-tables[54].df.iloc[7, 6] = row2[0] + ' ' + row2[1] + ' ' + row2[2] + ' ' + row2[3]
-tables[54].df.iloc[7, 7] = row2[9] + ' ' + row2[10] + ' ' + row2[11]
+clean_table_two_rows_has_exam2(54, 5)
 
 # TABLE 56 SEM I
 clean_table(55, 1, 4)
