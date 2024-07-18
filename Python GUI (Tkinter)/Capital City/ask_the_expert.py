@@ -19,6 +19,11 @@ read_from_file()
 print(the_world)
 
 
+def write_to_file(country_name, city_name):
+    with open('capital_data.txt', 'a') as file:
+        file.write('\n' + country_name + '/' + city_name)
+
+
 def custom_askstring(title, prompt, dialog_size="450x150", bg_color="lightblue", font_size=12, font_weight="bold"):
     dialog = Tk()
     dialog.title(title)
@@ -68,5 +73,16 @@ while True:
         if query_country in the_world:
             result = the_world[query_country]
             messagebox.showinfo('Answer', 'The capital city of ' + query_country + ' is ' + result + '!')
+        else:
+            new_city = custom_askstring(
+                'Teach me',
+                'I don\'t know! What is the capital city of ' + query_country + '?',
+                dialog_size="450x150",
+                bg_color="lightblue",
+                font_size=12,
+                font_weight="bold"
+            )
+            the_world[query_country] = new_city
+            write_to_file(query_country, new_city)
     else:
         break
