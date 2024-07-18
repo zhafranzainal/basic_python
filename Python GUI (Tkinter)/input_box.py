@@ -1,4 +1,4 @@
-from tkinter import Tk, Entry, Label
+from tkinter import Tk, Entry, Label, Button
 
 # Create the main window
 root = Tk()
@@ -14,6 +14,10 @@ label.pack()
 # Create an input box (Entry)
 entry = Entry(root)
 entry.pack()
+
+# Create a button
+button = Button(root, text="Greet Me")
+button.pack()
 
 # Run the application
 root.mainloop()
