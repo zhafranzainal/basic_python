@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import pandas as pd
 import time
 
@@ -52,22 +52,61 @@ try:
         EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
     )
 
-    # Extract table data
+    # Extract main table data
     rows = table.find_elements(By.TAG_NAME, 'tr')
-    data = []
+    main_data = []
 
-    for row in rows:
-        # Extract text from each cell in the row
-        cells = row.find_elements(By.TAG_NAME, 'td') or row.find_elements(By.TAG_NAME, 'th')
-        row_data = [cell.text.strip() for cell in cells]
-        data.append(row_data)
+    for row in rows[1:]:  # Skip the header row
+        columns = row.find_elements(By.TAG_NAME, 'td')
+        if columns:
+            # Extract text from each cell in the row
+            row_data = [col.text.strip() for col in columns]
+
+            # Click on the link in the "Amount" column
+            try:
+                amount_link = columns[3].find_element(By.TAG_NAME, 'a')
+                amount_link.click()
+
+                # Switch to the new tab
+                WebDriverWait(driver, 20).until(lambda d: len(d.window_handles) > 1)
+                driver.switch_to.window(driver.window_handles[-1])
+
+                # Wait for the subdetails table to be present
+                sub_table = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
+                )
+
+                # Extract subdetails table data
+                sub_rows = sub_table.find_elements(By.TAG_NAME, 'tr')
+                sub_data = []
+
+                for sub_row in sub_rows:
+                    sub_cells = sub_row.find_elements(By.TAG_NAME, 'td') or sub_row.find_elements(By.TAG_NAME, 'th')
+                    sub_row_data = [cell.text.strip() for cell in sub_cells]
+                    sub_data.append(sub_row_data)
+
+                # Append subdetails to row data
+                row_data.append(sub_data)
+
+                # Close the new tab and switch back to the original tab
+                driver.close()
+                driver.switch_to.window(driver.window_handles[1])
+                WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head')))
+            except NoSuchElementException:
+                print("Link in the 'Amount' column not found.")
+                row_data.append("No details found")
+
+            # Append row data to list
+            main_data.append(row_data)
 
     # Convert data to DataFrame
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(main_data,
+                      columns=['Posting ID', 'Posting Run Date', 'Currency', 'Amount', 'Pay Currency', 'Pay Amount',
+                               'Detail'])
 
     # Export to CSV
-    df.to_csv('output.csv', index=False, header=False)
-    print("Data exported to output.csv")
+    df.to_csv('output_with_details.csv', index=False)
+    print("Data exported to output_with_details.csv")
 
 except TimeoutException as e:
     print("An element was not found within the time limit.")
