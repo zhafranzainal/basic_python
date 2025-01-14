@@ -54,14 +54,11 @@ try:
 
     # Extract main table data
     rows = table.find_elements(By.TAG_NAME, 'tr')
-    main_data = []
+    subdetails_data = []
 
     for row in rows[1:]:  # Skip the header row
         columns = row.find_elements(By.TAG_NAME, 'td')
         if columns:
-            # Extract text from each cell in the row
-            row_data = [col.text.strip() for col in columns]
-
             # Click on the link in the "Amount" column
             try:
                 amount_link = columns[3].find_element(By.TAG_NAME, 'a')
@@ -78,15 +75,11 @@ try:
 
                 # Extract subdetails table data
                 sub_rows = sub_table.find_elements(By.TAG_NAME, 'tr')
-                sub_data = []
 
                 for sub_row in sub_rows:
                     sub_cells = sub_row.find_elements(By.TAG_NAME, 'td') or sub_row.find_elements(By.TAG_NAME, 'th')
                     sub_row_data = [cell.text.strip() for cell in sub_cells]
-                    sub_data.append(sub_row_data)
-
-                # Append subdetails to row data
-                row_data.append(sub_data)
+                    subdetails_data.append(sub_row_data)
 
                 # Close the new tab and switch back to the original tab
                 driver.close()
@@ -94,19 +87,17 @@ try:
                 WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head')))
             except NoSuchElementException:
                 print("Link in the 'Amount' column not found.")
-                row_data.append("No details found")
 
-            # Append row data to list
-            main_data.append(row_data)
-
-    # Convert data to DataFrame
-    df = pd.DataFrame(main_data,
-                      columns=['Posting ID', 'Posting Run Date', 'Currency', 'Amount', 'Pay Currency', 'Pay Amount',
-                               'Detail'])
+    # Convert subdetails data to DataFrame
+    df = pd.DataFrame(subdetails_data, columns=[
+        'Posting ID', 'Fee ID', 'Posting Run Date', 'Transaction Date', 'Fee Type', 'Fee Status',
+        'Disbursement Method', 'Reference Number', 'Grouping Level', 'Currency', 'Amount',
+        'Certificate No.', 'Product Code', 'DR GL Account Code', 'CR GL Account Code'
+    ])
 
     # Export to CSV
-    df.to_csv('output_with_details.csv', index=False)
-    print("Data exported to output_with_details.csv")
+    df.to_csv('subdetails_output.csv', index=False)
+    print("Subdetails data exported to subdetails_output.csv")
 
 except TimeoutException as e:
     print("An element was not found within the time limit.")
