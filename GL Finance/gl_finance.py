@@ -3,8 +3,9 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, StaleElementReferenceException
+from selenium.common.exceptions import TimeoutException
 import pandas as pd
+import time
 
 # Specify the path to your ChromeDriver
 service = Service('D:/Installation/chromedriver-win64/chromedriver.exe')
@@ -40,6 +41,12 @@ try:
     driver.switch_to.window(driver.window_handles[-1])
     print("Switched to new tab.")
 
+    # At this point, manually enter the Certificate No. in the input field and click the search button
+
+    # Wait for 20 seconds to allow the table to load
+    print("Waiting for 20 seconds to allow the table to load...")
+    time.sleep(20)
+
     # Wait for the table to be present
     table = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
@@ -50,52 +57,17 @@ try:
     data = []
 
     for row in rows:
-        columns = row.find_elements(By.TAG_NAME, 'td')
-        if columns:
-            # Print the text of each column for debugging
-            column_texts = [col.text for col in columns]
-            print("Row data:", column_texts)
-
-            try:
-                # Check if the "Amount" column has a link
-                if len(columns) > 3:
-                    amount_link = columns[3].find_element(By.TAG_NAME, 'a')
-                    amount_link.click()
-
-                    # Switch to the new tab
-                    driver.switch_to.window(driver.window_handles[-1])
-
-                    # Wait for the new page to load
-                    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'detail_table')))
-                    detail_data = driver.find_element(By.ID, 'detail_table').text
-
-                    # Append data to list
-                    data.append({
-                        'Posting ID': columns[0].text,
-                        'Posting Run Date': columns[1].text,
-                        'Currency': columns[2].text,
-                        'Amount': columns[3].text,
-                        'Pay Currency': columns[4].text,
-                        'Pay Amount': columns[5].text,
-                        'Detail': detail_data
-                    })
-
-                    # Close the new tab and switch back to the original tab
-                    driver.close()
-                    driver.switch_to.window(driver.window_handles[0])
-
-                    # Wait for the main table page to be ready again
-                    WebDriverWait(driver, 20).until(
-                        EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head')))
-            except NoSuchElementException:
-                print("Link in the 'Amount' column not found.")
+        # Extract text from each cell in the row
+        cells = row.find_elements(By.TAG_NAME, 'td') or row.find_elements(By.TAG_NAME, 'th')
+        row_data = [cell.text.strip() for cell in cells]
+        data.append(row_data)
 
     # Convert data to DataFrame
     df = pd.DataFrame(data)
 
-    # Export to Excel
-    df.to_excel('output.xlsx', index=False)
-    print("Data exported to output.xlsx")
+    # Export to CSV
+    df.to_csv('output.csv', index=False, header=False)
+    print("Data exported to output.csv")
 
 except TimeoutException as e:
     print("An element was not found within the time limit.")
