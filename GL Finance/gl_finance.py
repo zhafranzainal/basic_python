@@ -52,44 +52,86 @@ try:
         EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
     )
 
-    # Extract main table data
-    rows = table.find_elements(By.TAG_NAME, 'tr')
-    subdetails_data = []
+    # Initialize a list to store all subdetails data
+    all_subdetails_data = []
 
-    for row in rows[1:]:  # Skip the header row
-        columns = row.find_elements(By.TAG_NAME, 'td')
-        if columns:
-            # Click on the link in the "Amount" column
-            try:
-                amount_link = columns[3].find_element(By.TAG_NAME, 'a')
-                amount_link.click()
 
-                # Switch to the new tab
-                WebDriverWait(driver, 20).until(lambda d: len(d.window_handles) > 1)
-                driver.switch_to.window(driver.window_handles[-1])
+    # Function to extract data from the current page
+    def extract_data_from_page():
+        # Wait for the table to be present
+        table = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
+        )
 
-                # Wait for the subdetails table to be present
-                sub_table = WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
-                )
+        # Extract main table data
+        rows = table.find_elements(By.TAG_NAME, 'tr')
+        for row in rows[1:]:  # Skip the header row
+            columns = row.find_elements(By.TAG_NAME, 'td')
+            if columns:
+                # Click on the link in the "Amount" column
+                try:
+                    amount_link = columns[3].find_element(By.TAG_NAME, 'a')
+                    amount_link.click()
 
-                # Extract subdetails table data
-                sub_rows = sub_table.find_elements(By.TAG_NAME, 'tr')
+                    # Switch to the new tab
+                    WebDriverWait(driver, 20).until(lambda d: len(d.window_handles) > 1)
+                    driver.switch_to.window(driver.window_handles[-1])
 
-                for sub_row in sub_rows[1:]:  # Skip the header row in subdetails
-                    sub_cells = sub_row.find_elements(By.TAG_NAME, 'td') or sub_row.find_elements(By.TAG_NAME, 'th')
-                    sub_row_data = [cell.text.strip() for cell in sub_cells]
-                    subdetails_data.append(sub_row_data)
+                    # Wait for the subdetails table to be present
+                    sub_table = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
+                    )
 
-                # Close the new tab and switch back to the original tab
-                driver.close()
-                driver.switch_to.window(driver.window_handles[1])
-                WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head')))
-            except NoSuchElementException:
-                print("Link in the 'Amount' column not found.")
+                    # Extract subdetails table data
+                    sub_rows = sub_table.find_elements(By.TAG_NAME, 'tr')
 
-    # Convert subdetails data to DataFrame
-    df = pd.DataFrame(subdetails_data, columns=[
+                    for sub_row in sub_rows[1:]:  # Skip the header row in subdetails
+                        sub_cells = sub_row.find_elements(By.TAG_NAME, 'td') or sub_row.find_elements(By.TAG_NAME, 'th')
+                        sub_row_data = [cell.text.strip() for cell in sub_cells]
+                        all_subdetails_data.append(sub_row_data)
+
+                    # Close the new tab and switch back to the original tab
+                    driver.close()
+                    driver.switch_to.window(driver.window_handles[1])
+                    WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head')))
+                except NoSuchElementException:
+                    print("Link in the 'Amount' column not found.")
+
+
+    # Extract data from the first page
+    extract_data_from_page()
+
+    # Loop through each page link
+    while True:
+        # Re-locate the pagination element
+        pagination = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'td.font_turnpage'))
+        )
+
+        # Find the current page number
+        current_page = pagination.find_element(By.CLASS_NAME, 'font_pageon').text
+
+        # Find all page links
+        page_links = pagination.find_elements(By.TAG_NAME, 'a')
+
+        # Find the next page link
+        next_page_link = None
+        for link in page_links:
+            if link.text > current_page:
+                next_page_link = link
+                break
+
+        # If there's a next page, click it and extract data
+        if next_page_link:
+            next_page_link.click()
+            WebDriverWait(driver, 20).until(EC.staleness_of(pagination))  # Wait for the pagination to refresh
+            extract_data_from_page()
+        else:
+            break
+
+    # Convert all subdetails data to DataFrame
+    df = pd.DataFrame(all_subdetails_data, columns=[
         'Posting ID', 'Fee ID', 'Posting Run Date', 'Transaction Date', 'Fee Type', 'Fee Status',
         'Disbursement Method', 'Reference Number', 'Grouping Level', 'Currency', 'Amount',
         'Certificate No.', 'Product Code', 'DR GL Account Code', 'CR GL Account Code'
