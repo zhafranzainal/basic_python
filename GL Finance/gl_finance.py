@@ -56,8 +56,59 @@ try:
     all_subdetails_data = []
 
 
-    # Function to extract data from the current page
-    def extract_data_from_page():
+    # Function to extract data from the current subdetails page
+    def extract_data_from_subdetails_page():
+        # Wait for the subdetails table to be present
+        sub_table = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
+        )
+
+        # Extract subdetails table data
+        sub_rows = sub_table.find_elements(By.TAG_NAME, 'tr')
+
+        for sub_row in sub_rows[1:]:  # Skip the header row in subdetails
+            sub_cells = sub_row.find_elements(By.TAG_NAME, 'td') or sub_row.find_elements(By.TAG_NAME, 'th')
+            sub_row_data = [cell.text.strip() for cell in sub_cells]
+            all_subdetails_data.append(sub_row_data)
+
+
+    # Function to handle pagination on the subdetails page
+    def handle_subdetails_pagination():
+        while True:
+            extract_data_from_subdetails_page()
+
+            # Re-locate the pagination element on the subdetails page
+            try:
+                sub_pagination = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, 'td.font_turnpage'))
+                )
+
+                # Find the current page number
+                current_sub_page = sub_pagination.find_element(By.CLASS_NAME, 'font_pageon').text
+
+                # Find all page links
+                sub_page_links = sub_pagination.find_elements(By.TAG_NAME, 'a')
+
+                # Find the next page link
+                next_sub_page_link = None
+                for link in sub_page_links:
+                    if link.text > current_sub_page:
+                        next_sub_page_link = link
+                        break
+
+                # If there's a next page, click it
+                if next_sub_page_link:
+                    next_sub_page_link.click()
+                    WebDriverWait(driver, 20).until(
+                        EC.staleness_of(sub_pagination))  # Wait for the pagination to refresh
+                else:
+                    break
+            except TimeoutException:
+                break  # No pagination found, exit the loop
+
+
+    # Function to extract data from the current main page
+    def extract_data_from_main_page():
         # Wait for the table to be present
         table = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
@@ -77,18 +128,8 @@ try:
                     WebDriverWait(driver, 20).until(lambda d: len(d.window_handles) > 1)
                     driver.switch_to.window(driver.window_handles[-1])
 
-                    # Wait for the subdetails table to be present
-                    sub_table = WebDriverWait(driver, 20).until(
-                        EC.presence_of_element_located((By.CSS_SELECTOR, 'table.table_head'))
-                    )
-
-                    # Extract subdetails table data
-                    sub_rows = sub_table.find_elements(By.TAG_NAME, 'tr')
-
-                    for sub_row in sub_rows[1:]:  # Skip the header row in subdetails
-                        sub_cells = sub_row.find_elements(By.TAG_NAME, 'td') or sub_row.find_elements(By.TAG_NAME, 'th')
-                        sub_row_data = [cell.text.strip() for cell in sub_cells]
-                        all_subdetails_data.append(sub_row_data)
+                    # Handle pagination on the subdetails page
+                    handle_subdetails_pagination()
 
                     # Close the new tab and switch back to the original tab
                     driver.close()
@@ -99,10 +140,10 @@ try:
                     print("Link in the 'Amount' column not found.")
 
 
-    # Extract data from the first page
-    extract_data_from_page()
+    # Extract data from the first main page
+    extract_data_from_main_page()
 
-    # Loop through each page link
+    # Loop through each page link on the main page
     while True:
         # Re-locate the pagination element
         pagination = WebDriverWait(driver, 20).until(
@@ -126,7 +167,7 @@ try:
         if next_page_link:
             next_page_link.click()
             WebDriverWait(driver, 20).until(EC.staleness_of(pagination))  # Wait for the pagination to refresh
-            extract_data_from_page()
+            extract_data_from_main_page()
         else:
             break
 
