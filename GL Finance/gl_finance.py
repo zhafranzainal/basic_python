@@ -76,7 +76,7 @@ try:
                 # Extract subdetails table data
                 sub_rows = sub_table.find_elements(By.TAG_NAME, 'tr')
 
-                for sub_row in sub_rows:
+                for sub_row in sub_rows[1:]:  # Skip the header row in subdetails
                     sub_cells = sub_row.find_elements(By.TAG_NAME, 'td') or sub_row.find_elements(By.TAG_NAME, 'th')
                     sub_row_data = [cell.text.strip() for cell in sub_cells]
                     subdetails_data.append(sub_row_data)
