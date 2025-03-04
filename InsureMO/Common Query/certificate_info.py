@@ -65,7 +65,7 @@ try:
     search_button.click()
 
     # Wait until the tables are fully loaded
-    time.sleep(5)
+    time.sleep(1)
     tables = WebDriverWait(driver, 20).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'table.table_data'))
     )
@@ -100,6 +100,10 @@ try:
         ).text
 
         certificates_data.append([formatted_cert_no, proposal_date, risk_start_date])
+
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//input[@value="Back to Search Homepage"]'))
+        ).click()
 
         # Convert data to DataFrame
         df = pd.DataFrame(certificates_data, columns=['Certificate No.', 'Proposal Date', 'Risk Start Date'])
