@@ -14,69 +14,67 @@ service = Service('D:/Installation/chromedriver-win64/chromedriver.exe')
 # Set up Selenium WebDriver with the Service
 driver = webdriver.Chrome(service=service)
 
-# Load certificate numbers from the CSV file
-certificates_df = pd.read_csv('certificate_no.csv')
 
-# Check if the CSV has a column named 'Certificate No.'
-if 'Certificate No.' not in certificates_df.columns:
-    print("Error: 'Certificate No.' column not found in certificate_no.csv.")
-    driver.quit()
-else:
-    certificate_numbers = certificates_df['Certificate No.'].tolist()
+def login():
+    """Logs in to the website."""
 
-# Format certificate number with leading zeros (10 digits)
-formatted_cert_no = f"{certificate_numbers[0]:010d}"
+    driver.get('https://stbdpreprod-sandbox-sg.insuremo.com/ui/admin/#/')
 
-# Log in to the website
-driver.get('https://stbdpreprod-sandbox-sg.insuremo.com/ui/admin/#/')
+    try:
+        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'username'))).send_keys('abc')
+        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'password'))).send_keys('123')
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, 'submitEbao'))).click()
+        print("Login successful.")
 
-try:
-    # Wait for the username field to be present and enter the username
-    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'username'))).send_keys('abc')
-    print("Username field found and filled.")
+        # Navigate to "Common Query"
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//span[@class="rb-sidemenu-item-content" and @title="Common Query"]'))
+        ).click()
+        print("Navigated to Common Query.")
 
-    # Wait for the password field to be present and enter the password
-    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'password'))).send_keys('123')
-    print("Password field found and filled.")
+        # Switch to the new tab
+        WebDriverWait(driver, 20).until(lambda d: len(d.window_handles) > 1)
+        driver.switch_to.window(driver.window_handles[-1])
+        print("Switched to new tab.")
 
-    # Wait for the login button to be clickable and click it
-    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, 'submitEbao'))).click()
-    print("Login button clicked.")
+    except TimeoutException:
+        print("Login failed due to timeout.")
+        driver.quit()
+        exit()
 
-    # Wait for and click the "Common Query" item
-    WebDriverWait(driver, 20).until(
-        EC.element_to_be_clickable(
-            (By.XPATH, '//span[@class="rb-sidemenu-item-content" and @title="Common Query"]'))
-    ).click()
-    print("Clicked on Common Query, opening new tab.")
 
-    # Switch to the new tab
-    WebDriverWait(driver, 20).until(lambda d: len(d.window_handles) > 1)
-    driver.switch_to.window(driver.window_handles[-1])
-    print("Switched to new tab.")
+def search_certificate(cert_no):
+    """Searches for a given certificate number."""
 
-    # At this point, manually enter the Certificate No. in the input field and click the search button
+    try:
+        input_element = driver.find_element(By.NAME, "policyCode_text")
+        input_element.click()
+        input_element.clear()
+        input_element.send_keys(cert_no)
 
-    input_element = driver.find_element(By.NAME, "policyCode_text")
-    input_element.click()
-    input_element.send_keys(formatted_cert_no)
+        search_button = driver.find_element(By.XPATH, "//input[@value='Search']")
+        search_button.click()
 
-    search_button = driver.find_element(By.XPATH, "//input[@value='Search']")
-    search_button.click()
+        print(f"\nSearched for certificate: {cert_no}")
+        time.sleep(1)  # Allow time for the table to load
 
-    # Wait until the tables are fully loaded
-    time.sleep(1)
-    tables = WebDriverWait(driver, 20).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'table.table_data'))
-    )
+    except NoSuchElementException:
+        print(f"Search input field not found for certificate: {cert_no}")
 
-    # Initialize a list to store data
-    certificates_data = []
 
-    if len(tables) < 2:
-        print("Error: Second table not found!")
-    else:
-        # Select the second table
+def extract_certificate_data(cert_no):
+    """Extracts proposal date and commencement date for the given certificate."""
+
+    try:
+        tables = WebDriverWait(driver, 20).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'table.table_data'))
+        )
+
+        if len(tables) < 2:
+            print(f"Error: Second table not found for certificate {cert_no}!")
+            return [cert_no, "N/A", "N/A"]
+
         second_table = tables[1]
 
         # Extract proposal date
@@ -90,7 +88,7 @@ try:
         ).text
 
         # Extract risk start date
-        risk_start_date = WebDriverWait(driver, 10).until(
+        risk_start_date = WebDriverWait(second_table, 10).until(
             EC.presence_of_element_located(
                 (
                     By.XPATH,
@@ -99,21 +97,58 @@ try:
             )
         ).text
 
-        certificates_data.append([formatted_cert_no, proposal_date, risk_start_date])
+        print(f"Certificate No : {cert_no} | Proposal Date: {proposal_date} | Risk Start Date: {risk_start_date}")
+        return [cert_no, proposal_date, risk_start_date]
 
+    except (TimeoutException, NoSuchElementException):
+        print(f"Error: No records found for certificate {cert_no}.")
+        return [cert_no, "N/A", "N/A"]
+
+
+def click_back_to_search():
+    """Navigate to search homepage."""
+    try:
         WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, '//input[@value="Back to Search Homepage"]'))
         ).click()
+        print("Clicked 'Back to Search Homepage' button.")
 
-        # Convert data to DataFrame
-        df = pd.DataFrame(certificates_data, columns=['Certificate No.', 'Proposal Date', 'Risk Start Date'])
+    except TimeoutException:
+        print("Error: 'Back to Search Homepage' button not found or not clickable.")
 
-        # Export to CSV
-        df.to_csv('certificates_output.csv', index=False)
-        print("Data exported to certificates_output.csv")
 
-except TimeoutException as e:
-    print("An element was not found within the time limit.")
-    print(e)
-finally:
+def main():
+    """Main function to execute the copy-pasting workflow."""
+
+    login()
+
+    # Load certificate numbers from CSV
+    certificates_df = pd.read_csv('certificate_no.csv')
+
+    if 'Certificate No.' not in certificates_df.columns:
+        print("Error: 'Certificate No.' column not found in certificate_no.csv.")
+        driver.quit()
+        return
+
+    certificate_numbers = certificates_df['Certificate No.'].tolist()
+    certificates_list = []
+
+    for certificate_number in certificate_numbers:
+        # Format certificate number with leading zeros (10 digits)
+        formatted_cert_no = f"{certificate_number:010d}"
+
+        search_certificate(formatted_cert_no)
+        certificate_data = extract_certificate_data(formatted_cert_no)
+        certificates_list.append(certificate_data)
+        click_back_to_search()
+
+    # Save extracted data to CSV
+    df = pd.DataFrame(certificates_list, columns=['Certificate No.', 'Proposal Date', 'Risk Start Date'])
+    df.to_csv('certificates_output.csv', index=False)
+    print("\nData exported to certificates_output.csv")
+
     driver.quit()
+
+
+if __name__ == "__main__":
+    main()
