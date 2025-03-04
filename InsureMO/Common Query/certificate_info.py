@@ -43,9 +43,16 @@ try:
     print("Switched to new tab.")
 
     # At this point, manually enter the Certificate No. in the input field and click the search button
-    time.sleep(5)
+
+    input_element = driver.find_element(By.NAME, "policyCode_text")
+    input_element.click()
+    input_element.send_keys("0000003650")
+
+    search_button = driver.find_element(By.XPATH, "//input[@value='Search']")
+    search_button.click()
 
     # Wait until the tables are fully loaded
+    time.sleep(5)
     tables = WebDriverWait(driver, 20).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'table.table_data'))
     )
