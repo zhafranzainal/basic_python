@@ -57,7 +57,10 @@ try:
         except Exception as e:
             print("Error extracting certificate", e)
 
-    print("Final List of Certificate Numbers:", certificate_number_list)
+    # Export to CSV
+    df = pd.DataFrame(certificate_number_list, columns=['Certificate No.'])
+    df.to_csv('certificate_no.csv', index=False)
+    print("\nData exported to certificate_no.csv")
 
 except TimeoutException as e:
     print("An element was not found within the time limit.")
