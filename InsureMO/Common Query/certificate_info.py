@@ -24,6 +24,9 @@ if 'Certificate No.' not in certificates_df.columns:
 else:
     certificate_numbers = certificates_df['Certificate No.'].tolist()
 
+# Format certificate number with leading zeros (10 digits)
+formatted_cert_no = f"{certificate_numbers[0]:010d}"
+
 # Log in to the website
 driver.get('https://stbdpreprod-sandbox-sg.insuremo.com/ui/admin/#/')
 
@@ -56,7 +59,7 @@ try:
 
     input_element = driver.find_element(By.NAME, "policyCode_text")
     input_element.click()
-    input_element.send_keys("0000003650")
+    input_element.send_keys(formatted_cert_no)
 
     search_button = driver.find_element(By.XPATH, "//input[@value='Search']")
     search_button.click()
@@ -96,7 +99,7 @@ try:
             )
         ).text
 
-        certificates_data.append(["0000003650", proposal_date, risk_start_date])
+        certificates_data.append([formatted_cert_no, proposal_date, risk_start_date])
 
         # Convert data to DataFrame
         df = pd.DataFrame(certificates_data, columns=['Certificate No.', 'Proposal Date', 'Risk Start Date'])
