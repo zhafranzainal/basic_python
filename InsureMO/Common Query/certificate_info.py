@@ -26,22 +26,26 @@ def login():
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, 'submitEbao'))).click()
         print("Login successful.")
 
-        # Navigate to "Common Query"
-        WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, '//span[@class="rb-sidemenu-item-content" and @title="Common Query"]'))
-        ).click()
-        print("Navigated to Common Query.")
-
-        # Switch to the new tab
-        WebDriverWait(driver, 20).until(lambda d: len(d.window_handles) > 1)
-        driver.switch_to.window(driver.window_handles[-1])
-        print("Switched to new tab.")
-
     except TimeoutException:
         print("Login failed due to timeout.")
         driver.quit()
         exit()
+
+
+def navigate_then_switch_tab():
+    """Navigate section then switch tab."""
+
+    # Navigate to specified section
+    WebDriverWait(driver, 20).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, '//span[@class="rb-sidemenu-item-content" and @title="Common Query"]'))
+    ).click()
+    print("Navigated to Common Query.")
+
+    # Switch to the new tab
+    WebDriverWait(driver, 20).until(lambda d: len(d.window_handles) > 1)
+    driver.switch_to.window(driver.window_handles[-1])
+    print("Switched to new tab.")
 
 
 def search_certificate(cert_no):
@@ -116,11 +120,21 @@ def click_back_to_search():
     except TimeoutException:
         print("Error: 'Back to Search Homepage' button not found or not clickable.")
 
+        # Check if the errorInfo element is present
+        error_info = driver.find_elements(By.NAME, "errorInfo")
+        if error_info:
+            print("Error info found, clicking the 'Exit' button.")
+            exit_button = driver.find_element(By.XPATH, '//input[@name="exit"]')
+            exit_button.click()
+            driver.switch_to.window(driver.window_handles[-1])
+            navigate_then_switch_tab()
+
 
 def main():
     """Main function to execute the copy-pasting workflow."""
 
     login()
+    navigate_then_switch_tab()
 
     # Load certificate numbers from CSV
     certificates_df = pd.read_csv('certificate_no.csv')
