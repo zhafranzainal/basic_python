@@ -97,7 +97,7 @@ def extract_certificate_data(cert_no):
             )
         ).text
 
-        print(f"Certificate No : {cert_no} | Proposal Date: {proposal_date} | Risk Start Date: {risk_start_date}")
+        print(f"Certificate No: {cert_no} | Proposal Date: {proposal_date} | Risk Start Date: {risk_start_date}")
         return [cert_no, proposal_date, risk_start_date]
 
     except (TimeoutException, NoSuchElementException):
