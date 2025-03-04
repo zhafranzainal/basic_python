@@ -14,6 +14,16 @@ service = Service('D:/Installation/chromedriver-win64/chromedriver.exe')
 # Set up Selenium WebDriver with the Service
 driver = webdriver.Chrome(service=service)
 
+# Load certificate numbers from the CSV file
+certificates_df = pd.read_csv('certificate_no.csv')
+
+# Check if the CSV has a column named 'Certificate No.'
+if 'Certificate No.' not in certificates_df.columns:
+    print("Error: 'Certificate No.' column not found in certificate_no.csv.")
+    driver.quit()
+else:
+    certificate_numbers = certificates_df['Certificate No.'].tolist()
+
 # Log in to the website
 driver.get('https://stbdpreprod-sandbox-sg.insuremo.com/ui/admin/#/')
 
