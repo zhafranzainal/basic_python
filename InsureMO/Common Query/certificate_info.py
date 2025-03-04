@@ -67,7 +67,7 @@ def extract_certificate_data(cert_no):
     """Extracts proposal date and commencement date for the given certificate."""
 
     try:
-        tables = WebDriverWait(driver, 20).until(
+        tables = WebDriverWait(driver, 1).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'table.table_data'))
         )
 
@@ -78,7 +78,7 @@ def extract_certificate_data(cert_no):
         second_table = tables[1]
 
         # Extract proposal date
-        proposal_date = WebDriverWait(second_table, 10).until(
+        proposal_date = WebDriverWait(second_table, 1).until(
             EC.presence_of_element_located(
                 (
                     By.XPATH,
@@ -88,7 +88,7 @@ def extract_certificate_data(cert_no):
         ).text
 
         # Extract risk start date
-        risk_start_date = WebDriverWait(second_table, 10).until(
+        risk_start_date = WebDriverWait(second_table, 1).until(
             EC.presence_of_element_located(
                 (
                     By.XPATH,
@@ -108,7 +108,7 @@ def extract_certificate_data(cert_no):
 def click_back_to_search():
     """Navigate to search homepage."""
     try:
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.XPATH, '//input[@value="Back to Search Homepage"]'))
         ).click()
         print("Clicked 'Back to Search Homepage' button.")
