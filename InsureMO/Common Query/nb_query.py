@@ -62,14 +62,17 @@ try:
         # Check if the "Next" button is present (the right arrow)
         try:
 
-            next_button = WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, 'li.rb-pagination-btn span.rainbow.SingleArrowRight16-1'))
+            # Check if the "Next" button is not inactive
+            next_button = WebDriverWait(driver, 1).until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, 'li.rb-pagination-btn:not(.not) span.rainbow.SingleArrowRight16-1')
+                )
             )
             next_button.click()
-            print("Moved to the next page.")
+            print("Moved to the next page.\n")
 
             # Wait for the next page to load
-            time.sleep(2)
+            time.sleep(1)
 
         except TimeoutException:
             print("No more pages. Exiting the loop.")
