@@ -57,6 +57,9 @@ try:
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'table.table_data'))
     )
 
+    # Initialize a list to store data
+    certificates_data = []
+
     if len(tables) < 2:
         print("Error: Second table not found!")
     else:
@@ -83,8 +86,14 @@ try:
             )
         ).text
 
-        print(f"Proposal Date: {proposal_date}")
-        print(f"Risk Start Date: {risk_start_date}")
+        certificates_data.append(["0000003650", proposal_date, risk_start_date])
+
+        # Convert data to DataFrame
+        df = pd.DataFrame(certificates_data, columns=['Certificate No.', 'Proposal Date', 'Risk Start Date'])
+
+        # Export to CSV
+        df.to_csv('certificates_output.csv', index=False)
+        print("Data exported to certificates_output.csv")
 
 except TimeoutException as e:
     print("An element was not found within the time limit.")
