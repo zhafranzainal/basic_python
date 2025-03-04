@@ -60,7 +60,7 @@ def search_certificate(cert_no):
         time.sleep(1)  # Allow time for the table to load
 
     except NoSuchElementException:
-        print(f"Search input field not found for certificate: {cert_no}")
+        print(f"\nSearch input field not found for certificate: {cert_no}")
 
 
 def extract_certificate_data(cert_no):
