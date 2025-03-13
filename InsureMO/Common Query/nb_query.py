@@ -41,7 +41,7 @@ try:
     WebDriverWait(driver, 20).until(EC.frame_to_be_available_and_switch_to_it((By.ID, "micro-app-iframe")))
 
     # List to store extracted certificate numbers
-    certificate_number_list = []
+    certificate_data = []
 
     while True:
         # Wait for all table rows to load on the current page
@@ -52,10 +52,14 @@ try:
         # Extract certificate numbers for this page
         for row in rows:
             try:
-                # Get the second column <td>, then extract the "title" attribute (certificate number)
-                cert_no = row.find_elements(By.CSS_SELECTOR, 'td')[1].get_attribute("title").strip()
-                certificate_number_list.append(cert_no)
-                print(f"Certificate No: {cert_no}")
+                cols = row.find_elements(By.CSS_SELECTOR, 'td')
+
+                cert_no = cols[1].get_attribute("title").strip()
+                product_main = cols[3].get_attribute("title").strip()
+
+                certificate_data.append([cert_no, product_main])
+                print(f"Certificate No: {cert_no} | Main Product: {product_main}")
+
             except Exception as e:
                 print("Error extracting certificate", e)
 
@@ -79,7 +83,7 @@ try:
             break
 
     # Export to CSV
-    df = pd.DataFrame(certificate_number_list, columns=['Certificate No.'])
+    df = pd.DataFrame(certificate_data, columns=['Certificate No.', 'Main Product'])
     df.to_csv('certificate_no.csv', index=False)
     print("\nData exported to certificate_no.csv")
 
