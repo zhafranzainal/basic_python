@@ -6,7 +6,7 @@ import os
 load_dotenv()
 API_KEY = os.getenv("SCOPUS_API_KEY")
 
-query = '"malicious URL detection" AND "machine learning" AND ( "browser extension" OR "web application" OR "deployment" )'
+query = 'TITLE-ABS-KEY("malicious URL detection" AND "machine learning" AND ("browser extension" OR "web application" OR "deployment"))'
 
 url = "https://api.elsevier.com/content/search/scopus"
 
@@ -42,7 +42,6 @@ while True:
     if start >= total:
         break
 
-# Convert to DataFrame
 df = pd.json_normalize(all_results)
 df.to_csv("scopus_export.csv", index=False)
-print(f"\nExported {len(df)} documents to scopus_export.csv")
+print(f"\nExported {len(df)} documents")
