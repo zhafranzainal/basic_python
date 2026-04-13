@@ -3,6 +3,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
 API_KEY = os.getenv("SCOPUS_API_KEY")
 
 query = '"malicious URL detection" AND "machine learning" AND ( "browser extension" OR "web application" OR "deployment" )'
